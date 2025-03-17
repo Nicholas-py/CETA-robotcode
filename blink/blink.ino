@@ -14,7 +14,11 @@
 Servo rServo;
 Servo lServo;
 
-#define LP A2
+#define SA0 A0
+#define SA1 A1
+#define SA2 A2
+
+#define Bu GP15
 
 void setup() {
 
@@ -26,16 +30,28 @@ void setup() {
 }
 
 void loop() {
-  int a = analogRead(LP);
+  float a = analogRead(SA0); //right
+  float b = analogRead(SA1); //center
+  float c = analogRead(SA2); //left
+  float Button = analogRead(Bu); //left
 
-  lServo.write(180);
+
+  //lServo.write(180);
   //rServo.write(0);
-  if (a != 6 && a != 40 && a != 41)
+  if (a != 0)
   {
-    Serial.println(analogRead(a));
+    Serial.print("A ");
+    Serial.println(a);
+    Serial.print("B ");
+    Serial.println(b);
+    Serial.print("C ");
+    Serial.println(c);
+    Serial.print("Button ");
+    Serial.println(Button);
+
+
     delay(100);
   }
-
 }
 
 
