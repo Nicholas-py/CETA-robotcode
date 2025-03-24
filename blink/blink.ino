@@ -36,10 +36,10 @@ void setup() {
 }
 
 void loop() {
-  float a = analogRead(SA0); //right
-  float b = analogRead(SA1); //center
-  float c = analogRead(SA2); //left
-  float Button = analogRead(Button); //left
+  float centerSensor = analogRead(SA0); //right
+  float leftSensor = analogRead(SA1); //center
+  float rightSensor = analogRead(SA2); //left
+  float Button = digitalRead(Bu); //left
 
 
   //lServo.write(180);
