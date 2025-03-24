@@ -18,7 +18,7 @@ Servo lServo;
 #define SA1 A1
 #define SA2 A2
 
-#define Bu GP15
+#define Bu D15
 
 void setup() {
 
@@ -30,10 +30,10 @@ void setup() {
 }
 
 void loop() {
-  float a = analogRead(SA0); //right
-  float b = analogRead(SA1); //center
-  float c = analogRead(SA2); //left
-  float Button = analogRead(Bu); //left
+  float centerSensor = analogRead(SA0); //right
+  float leftSensor = analogRead(SA1); //center
+  float rightSensor = analogRead(SA2); //left
+  float Button = digitalRead(Bu); //left
 
 
   //lServo.write(180);
