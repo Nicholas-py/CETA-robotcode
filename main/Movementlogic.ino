@@ -4,6 +4,7 @@ const int modifyspeed = 0.2;
 float heading;
 
 struct motorspeeds MovementLogic(float lsensor, float midsensor, float rsensor) {
+  if (lsensor > rsensor) {}
   int casenumber = int(lsensor > 0.5)*4+int(midsensor >0.5)*2 + int(rsensor > 0.5);
   struct motorspeeds toreturn = {0,0};
   switch (casenumber) {

@@ -17,6 +17,12 @@ Servo lServo;
 #define SA1 A1
 #define SA2 A2
 
+enum robotlocation {
+  POINTINGSTRAIGHT,
+  DRIFTEDLEFT,
+  DRIFTEDRIGHT
+  
+};
 
 struct motorspeeds {
   float left;
