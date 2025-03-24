@@ -18,7 +18,11 @@ Servo lServo;
 #define SA1 A1
 #define SA2 A2
 
-#define Bu D15
+#define CalButton D15
+
+float WhiteValue[3] = {0, 0, 0};
+float BlackValue[3] = {1000, 1000, 1000};
+bool hasCalibratedWhite = false;
 
 void setup() {
 
@@ -30,28 +34,50 @@ void setup() {
 }
 
 void loop() {
-  float centerSensor = analogRead(SA0); //right
-  float leftSensor = analogRead(SA1); //center
-  float rightSensor = analogRead(SA2); //left
-  float Button = digitalRead(Bu); //left
-
+  float centerSensor = analogRead(SA0); 
+  float leftSensor = analogRead(SA1); 
+  float rightSensor = analogRead(SA2); 
+  float CallibrationButton = digitalRead(CalButton); //left
 
   //lServo.write(180);
   //rServo.write(0);
-  if (a != 0)
-  {
-    Serial.print("A ");
-    Serial.println(a);
-    Serial.print("B ");
-    Serial.println(b);
-    Serial.print("C ");
-    Serial.println(c);
+  /*
+    Serial.print("Center ");
+    Serial.println(centerSensor);
+    Serial.print("Left ");
+    Serial.println(leftSensor);
+    Serial.print("Right ");
+    Serial.println(rightSensor);
     Serial.print("Button ");
-    Serial.println(Button);
+    Serial.println(CallibrationButton);
+*/
+    if (CallibrationButton == 0 && hasCalibratedWhite == false)
+    {
+      WhiteValue[0] = leftSensor;
+      WhiteValue[1] = centerSensor;
+      WhiteValue[2] = rightSensor;
+      hasCalibratedWhite = true;
+      while (CallibrationButton == 0)
+      {
+        delay(100);
+      }
+    }
+    if (CallibrationButton == 0 && hasCalibratedWhite == true)
+    {
+      BlackValue[0] = leftSensor;
+      BlackValue[1] = centerSensor;
+      BlackValue[2] = rightSensor;
+      hasCalibratedWhite = false;
+      while (CallibrationButton == 0)
+      {
+        delay(100);
+      }
+    }
+    Serial.println(WhiteValue[0]);
+    Serial.println(BlackValue[0]);
 
 
     delay(100);
-  }
 }
 
 
