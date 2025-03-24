@@ -7,7 +7,6 @@
 //
 #include <Servo.h>
 
-
 //int Lspeeds[1] = [-20];
 //int Rspeeds[1] = [-20];
 
@@ -18,7 +17,13 @@ Servo lServo;
 #define SA1 A1
 #define SA2 A2
 
-#define Bu GP15
+#define Button GP15
+
+struct motorspeeds {
+  float left;
+  float right;
+};
+
 
 void setup() {
 
@@ -26,19 +31,20 @@ void setup() {
   rServo.attach(4);
   Serial.begin(9600);
   Serial.println("5");
-
+  struct motorspeeds aaa = MovementLogic(1,1,1);
+  Serial.print(aaa.left);
 }
 
 void loop() {
   float a = analogRead(SA0); //right
   float b = analogRead(SA1); //center
   float c = analogRead(SA2); //left
-  float Button = analogRead(Bu); //left
+  float Button = analogRead(Button); //left
 
 
   //lServo.write(180);
   //rServo.write(0);
-  if (a != 0)
+  if (a == 0 && a==1)
   {
     Serial.print("A ");
     Serial.println(a);
