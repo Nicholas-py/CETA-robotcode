@@ -17,11 +17,10 @@ Servo lServo;
 #define SA1 A1
 #define SA2 A2
 
-enum robotlocation {
-  POINTINGSTRAIGHT,
-  DRIFTEDLEFT,
-  DRIFTEDRIGHT
-  
+struct sensorreadings {
+  float left;
+  float middle;
+  float right;
 };
 
 struct motorspeeds {
@@ -29,7 +28,7 @@ struct motorspeeds {
   float right;
 };
 
-#define CalButton D15
+#define CalButton 1
 
 float WhiteValue[3] = {0, 0, 0};
 float BlackValue[3] = {1000, 1000, 1000};
@@ -41,7 +40,8 @@ void setup() {
   rServo.attach(4);
   Serial.begin(9600);
   Serial.println("5");
-  struct motorspeeds aaa = MovementLogic(1,1,1);
+  struct sensorreadings inp = {1,1,1};
+  struct motorspeeds aaa = MovementLogic(inp);
   Serial.print(aaa.left);
 }
 
