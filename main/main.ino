@@ -1,10 +1,3 @@
-// 2022-08-09
-//
-// Modified Basic Example (Blink") for RPI-Pico-WH-based CETA IoT Robot
-// Refer to Schematic Diagram (#14-00069A)
-//
-// LED ("USER LED") connected to digital pin 14 (GP14)
-//
 #include <Servo.h>
 
 //int Lspeeds[1] = [-20];
@@ -45,7 +38,7 @@ void setup() {
   Serial.print(aaa.left);
 }
 
-void loop() {
+struct sensorreadings GetInput() {
   float centerSensor = analogRead(SA0); 
   float leftSensor = analogRead(SA1); 
   float rightSensor = analogRead(SA2); 
@@ -79,25 +72,28 @@ void loop() {
     }
     Serial.println(WhiteValue[0]);
     Serial.println(BlackValue[0]);
+  struct sensorreadings dummy = {1,1,1};
+  return dummy;
+}
 
-
+void loop() {
+    struct sensorreadings inputs = GetInput();
+    struct motorspeeds speeds = MovementLogic(inputs);
+    ActivateMotors(speeds);
     delay(100);
 }
 
-
-/*
-int pin = 14;
-// the setup function runs once when you press reset or power the board
-void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(pin, OUTPUT);
+void ActivateMotors(struct motorspeeds speeds) {
+  lServo.write(speeds.left);
+  rServo.write(speeds.right);
 }
 
-// the loop function runs over and over again forever
-void loop() {
-  digitalWrite(pin, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(500);                       // wait for a second
-  digitalWrite(pin, LOW);    // turn the LED off by making the voltage LOW
-  delay(500);                       // wait for a second
+void blink() {
+  pinMode(14, OUTPUT);
+  while (true) {
+    digitalWrite(14, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(500);                       // wait for a second
+    digitalWrite(14, LOW);    // turn the LED off by making the voltage LOW
+    delay(500);   }                    // wait for a second
 }
-*/
+

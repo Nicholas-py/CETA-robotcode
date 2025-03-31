@@ -1,5 +1,5 @@
-const int defaultspeed = 0.5;
-const int modifyspeed = 0.25;
+const int defaultspeed = 90;
+const int modifyspeed = 10;
 
 float heading = 0; //Measures drift
 float headingchange = 0.01f;
