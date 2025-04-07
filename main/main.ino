@@ -23,31 +23,43 @@ struct motorspeeds {
 
 #define CalButton 1
 
+//Holds 'white' values for calabration
 float WhiteValue[3] = {0, 0, 0};
+
+//Holds 'black' values for calabration
 float BlackValue[3] = {1000, 1000, 1000};
+
+//When false will calabrate white, when true will calabrate black
 bool hasCalibratedWhite = false;
 
 void setup() {
 
   lServo.attach(5);
   rServo.attach(4);
+    //lServo.write(180);
+    //rServo.write(0);
   Serial.begin(9600);
-  Serial.println("5");
+  Serial.println("Start");
   struct sensorreadings inp = {1,1,1};
   struct motorspeeds aaa = MovementLogic(inp);
   Serial.print(aaa.left);
+  blink();
 }
 
+//Gets inputs from light sensors and button
 struct sensorreadings GetInput() {
+
+  //Assigns vars to the input objects
   float centerSensor = analogRead(SA0); 
   float leftSensor = analogRead(SA1); 
   float rightSensor = analogRead(SA2); 
   float CallibrationButton = digitalRead(CalButton); //left
 
-  //lServo.write(180);
-  //rServo.write(0);
-    Serial.print("Button ");
-    Serial.println(CallibrationButton);
+    //Serial.print("Button ");
+    //Serial.println(CallibrationButton);
+
+    //Sets the calabration colour values based on what the sensor sees when triggered
+    //Triggered when the button is pressed
     if (CallibrationButton == 0 && hasCalibratedWhite == false)
     {
       WhiteValue[0] = leftSensor;
@@ -72,10 +84,18 @@ struct sensorreadings GetInput() {
     }
     Serial.println(WhiteValue[0]);
     Serial.println(BlackValue[0]);
-  struct sensorreadings dummy = {1,1,1};
-  return dummy;
+
+  //Value from 0 to 1 based on how close it is to the calabration white and black values
+  struct sensorreadings output = 
+  {
+    (leftSensor - WhiteValue[0]) / (BlackValue[0] / WhiteValue[0]),
+    (centerSensor - WhiteValue[1]) / (BlackValue[1] / WhiteValue[1]),
+    (rightSensor - WhiteValue[2]) / (BlackValue[2] / WhiteValue[2])
+  };
+  return output;
 }
 
+//Logic loop, called ever 'frame'
 void loop() {
     struct sensorreadings inputs = GetInput();
     struct motorspeeds speeds = MovementLogic(inputs);
@@ -83,11 +103,13 @@ void loop() {
     delay(100);
 }
 
+//Sets motor speeds
 void ActivateMotors(struct motorspeeds speeds) {
   lServo.write(speeds.left);
   rServo.write(speeds.right);
 }
 
+//Very important function, the robot will not work without
 void blink() {
   pinMode(14, OUTPUT);
   while (true) {
