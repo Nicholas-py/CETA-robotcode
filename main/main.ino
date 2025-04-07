@@ -1,5 +1,6 @@
 #include <Servo.h>
 
+
 //int Lspeeds[1] = [-20];
 //int Rspeeds[1] = [-20];
 
@@ -44,6 +45,11 @@ void setup() {
   struct motorspeeds aaa = MovementLogic(inp);
   Serial.print(aaa.left);
   blink();
+
+}
+
+float MapSensorTo01(float sensorval) {
+  return (sensorval - WhiteValue[0]) / (BlackValue[0] / WhiteValue[0]);
 }
 
 //Gets inputs from light sensors and button
@@ -86,25 +92,20 @@ struct sensorreadings GetInput() {
     Serial.println(BlackValue[0]);
 
   //Value from 0 to 1 based on how close it is to the calabration white and black values
-  struct sensorreadings output = 
-  {
-    (leftSensor - WhiteValue[0]) / (BlackValue[0] / WhiteValue[0]),
-    (centerSensor - WhiteValue[1]) / (BlackValue[1] / WhiteValue[1]),
-    (rightSensor - WhiteValue[2]) / (BlackValue[2] / WhiteValue[2])
-  };
+  struct sensorreadings output = {
+    MapSensorTo01(leftSensor), MapSensorTo01(centerSensor), MapSensorTo01(rightSensor)  };
   return output;
 }
 
-//Logic loop, called ever 'frame'
 void loop() {
+    Serial.println("loopin");
     struct sensorreadings inputs = GetInput();
     struct motorspeeds speeds = MovementLogic(inputs);
-    ActivateMotors(speeds);
+    SetMotorSpeeds(speeds);
     delay(100);
 }
 
-//Sets motor speeds
-void ActivateMotors(struct motorspeeds speeds) {
+void SetMotorSpeeds(struct motorspeeds speeds) {
   lServo.write(speeds.left);
   rServo.write(speeds.right);
 }
