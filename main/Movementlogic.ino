@@ -6,21 +6,19 @@ float headingchange = 0.01f;
 
 
 struct motorspeeds MovementLogic(struct sensorreadings inputs) {
-  if (inputs.middle + inputs.right + inputs.left < 0.5) {
+  if (inputs.center + inputs.right + inputs.left < 0.5) {
     return OnWhiteout(heading);
-  } else if (inputs.middle > inputs.right + inputs.left) {
+  } 
+  else if (inputs.center > inputs.right + inputs.left) {
     heading = OnPathStraight(heading);
-  } else if (inputs.right == inputs.left) {
+  } 
+  else if (inputs.right == inputs.left) {
     heading = OnPathStraight(heading);
-  } else if (inputs.middle > 0.5 && inputs.right > inputs.left && inputs.right > 0.3) {
-    heading = OnDrifting(heading, false, false);
-  } else if (inputs.middle > 0.5 && inputs.right < inputs.left && inputs.left > 0.3) {
-    heading = OnDrifting(heading, true, false);
-  } else if (inputs.middle < 0.5 && inputs.right > inputs.left && inputs.right > 0.3) {
-    heading = OnDrifting(heading, false, true);
-  } else if (inputs.middle < 0.5 && inputs.right < inputs.left && inputs.left > 0.3) {
-    heading = OnDrifting(heading, true, true);
+  } 
+  else {
+    heading = OnDrifting(heading, inputs.right < inputs.left, inputs.center > 0.5);
   }
+  
 
 
   struct motorspeeds toreturn = { defaultspeed + modifyspeed * heading, defaultspeed - modifyspeed * heading };
