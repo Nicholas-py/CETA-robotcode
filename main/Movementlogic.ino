@@ -16,7 +16,7 @@ struct motorspeeds MovementLogic(struct sensorreadings inputs) {
     heading = OnPathStraight(heading);
   } 
   else {
-    heading = OnDrifting(heading, inputs.right < inputs.left, inputs.center > 0.5);
+    heading = OnDrifting(heading, inputs.right < inputs.left, inputs.center < 0.5);
   }
   
 

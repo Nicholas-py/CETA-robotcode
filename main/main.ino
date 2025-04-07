@@ -41,7 +41,6 @@ void setup() {
 }
 
 
-//Gets inputs from light sensors and button
 
 void loop() {
     Serial.println("loopin");
