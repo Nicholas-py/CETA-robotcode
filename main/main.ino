@@ -33,18 +33,25 @@ void setup() {
   lServo.attach(5);
   rServo.attach(4);
   Serial.begin(9600);
-  delay(100);
-
+  delay(1000);
   Serial.println("Start");
-  blink();
+  Calibrate();
+
+  //blink();
 
 }
 
 
 
 void loop() {
-    Serial.println("loopin");
     struct sensorreadings inputs = GetInput();
+    Serial.print("Left: ");
+    Serial.println(inputs.left);
+    Serial.print("Center: ");
+    Serial.println(inputs.center);
+    Serial.print("Right: ");
+    Serial.println(inputs.right);
+
     struct motorspeeds speeds = MovementLogic(inputs);
     SetMotorSpeeds(speeds);
     delay(100);

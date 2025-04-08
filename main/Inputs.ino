@@ -60,7 +60,19 @@ struct rawsensorreadings GetCalibrationValues() {
 
 
 void Calibrate() {
+  struct rawsensorreadings inputs = GetRawInput();
   float CallibrationButton = digitalRead(CalButton);
+  int callibrationState = 0;
+  while (callibrationState < 3)
+  {
+    CallibrationButton = digitalRead(CalButton);
+    Serial.println(CalButton);
+
+    if (CallibrationButton == 0 && callibrationState == 0){
+      WhiteCalibrationValues = GetCalibrationValues();
+      callibrationState = 1;
+    }
+  }
 
   if (CallibrationButton == 0 && hasCalibratedWhite == false){
 
