@@ -40,9 +40,9 @@ void PrintReadings(struct rawsensorreadings thingy) {
 
 struct sensorreadings MapSensorTo01(struct rawsensorreadings sensorval) {
   struct sensorreadings output = {0,0,0};
-  output.left =  1.0*(sensorval.left  -  WhiteCalibrationValues.left)   /  (BlackCalibrationValues.left  -  WhiteCalibrationValues.left);
-  output.center =1.0*(sensorval.center - WhiteCalibrationValues.center) / (BlackCalibrationValues.center - WhiteCalibrationValues.center);
-  output.right = 1.0*(sensorval.right -  WhiteCalibrationValues.right)  / (BlackCalibrationValues.right -  WhiteCalibrationValues.right);
+  output.left =   1.0*(sensorval.left  -  WhiteCalibrationValues.left)   /  (BlackCalibrationValues.left  -  WhiteCalibrationValues.left);
+  output.center = 1.0*(sensorval.center - WhiteCalibrationValues.center) / (BlackCalibrationValues.center - WhiteCalibrationValues.center);
+  output.right =  1.0*(sensorval.right -  WhiteCalibrationValues.right)  / (BlackCalibrationValues.right -  WhiteCalibrationValues.right);
   return output;
 }
 
@@ -58,15 +58,23 @@ struct rawsensorreadings GetCalibrationValues() {
   return output;
 }
 
+void Test123()
+{
+    while (true)
+  {
+    Serial.println("Test123");
+  }
+}
 
+// Changes the calabration color values
 void Calibrate() {
   struct rawsensorreadings inputs = GetRawInput();
   float CallibrationButton = digitalRead(CalButton);
-  int callibrationState = 0;
-  while (callibrationState < 3)
+  int callibrationState = 0; //which color the colour sensors will calabrate next
+  while (true)
   {
     CallibrationButton = digitalRead(CalButton);
-    Serial.println(CalButton);
+    Serial.println("CalButton");
 
     if (CallibrationButton == 0 && callibrationState == 0){
       WhiteCalibrationValues = GetCalibrationValues();
