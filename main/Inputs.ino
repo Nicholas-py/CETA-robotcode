@@ -10,8 +10,8 @@ struct rawsensorreadings {
 };
 
 
-struct rawsensorreadings WhiteCalibrationValues = {0, 0, 0};
-struct rawsensorreadings BlackCalibrationValues = {1000, 1000, 1000};
+struct rawsensorreadings WhiteCalibrationValues = {450, 450, 550};
+struct rawsensorreadings BlackCalibrationValues = {950, 950, 950};
 
 
 struct sensorreadings GetInput() {
@@ -40,9 +40,9 @@ void PrintReadings(struct rawsensorreadings thingy) {
 
 struct sensorreadings MapSensorTo01(struct rawsensorreadings sensorval) {
   struct sensorreadings output = {0,0,0};
-  output.left =  (sensorval.left  -  WhiteCalibrationValues.left)   / (BlackCalibrationValues.left  /  WhiteCalibrationValues.left);
-  output.center =(sensorval.center - WhiteCalibrationValues.center) / (BlackCalibrationValues.center / WhiteCalibrationValues.center);
-  output.right = (sensorval.right -  WhiteCalibrationValues.right)  / (BlackCalibrationValues.right /  WhiteCalibrationValues.right);
+  output.left =  1.0*(sensorval.left  -  WhiteCalibrationValues.left)   /  (BlackCalibrationValues.left  -  WhiteCalibrationValues.left);
+  output.center =1.0*(sensorval.center - WhiteCalibrationValues.center) / (BlackCalibrationValues.center - WhiteCalibrationValues.center);
+  output.right = 1.0*(sensorval.right -  WhiteCalibrationValues.right)  / (BlackCalibrationValues.right -  WhiteCalibrationValues.right);
   return output;
 }
 

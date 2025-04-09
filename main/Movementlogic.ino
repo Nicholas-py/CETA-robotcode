@@ -1,5 +1,5 @@
 const int defaultspeed = 90;
-const int modifyspeed = 10;
+const int modifyspeed = 1;
 
 float heading = 0;  //Measures drift
 float headingchange = 0.01f;
@@ -33,7 +33,7 @@ int GetDirection(float heading) {
   }
 }
 
-float straighteningspeed = 1;
+float straighteningspeed = 100;
 
 struct motorspeeds OnWhiteout(float heading) {
   if (heading < 0) {

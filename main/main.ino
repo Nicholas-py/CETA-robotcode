@@ -35,7 +35,11 @@ void setup() {
   Serial.begin(9600);
   delay(1000);
   Serial.println("Start");
-  Calibrate();
+  lServo.write(0);
+  rServo.write(0);
+  Serial.println("hiiiiii");
+  delay(1000);
+  //Calibrate();
 
   //blink();
 
@@ -44,6 +48,7 @@ void setup() {
 
 
 void loop() {
+  Serial.print("'newcode");
     struct sensorreadings inputs = GetInput();
     Serial.print("Left: ");
     Serial.println(inputs.left);
