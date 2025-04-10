@@ -30,6 +30,7 @@ bool hasCalibratedWhite = false;
 
 void setup() {
 
+
   lServo.attach(5);
   rServo.attach(4);
   Serial.begin(9600);
@@ -39,6 +40,7 @@ void setup() {
   rServo.write(0);
   Serial.println("hiiiiii");
   delay(1000);
+  Calibrate();
   //Test123();
 
   //blink();
@@ -48,7 +50,7 @@ void setup() {
 
 
 void loop() {
-  Serial.print("'newcode");
+    //Serial.print("'newcode");
     struct sensorreadings inputs = GetInput();
     Serial.print("Left: ");
     Serial.println(inputs.left);

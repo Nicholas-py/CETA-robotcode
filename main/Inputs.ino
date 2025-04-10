@@ -1,4 +1,4 @@
-#define CalButton 1
+#define CalButton 15
 #define leftpin SA1
 #define centerpin SA0
 #define rightpin SA2
@@ -48,13 +48,14 @@ struct sensorreadings MapSensorTo01(struct rawsensorreadings sensorval) {
 
 
 struct rawsensorreadings GetCalibrationValues() {
-  float CalibrationButton = digitalRead(CalButton);
+  //float CalibrationButton = digitalRead(CalButton);
   struct rawsensorreadings output = GetRawInput();
+  output = GetRawInput();
 
-  while (CalibrationButton == 0) {
-    CalibrationButton = digitalRead(CalButton);
-    output = GetRawInput();
-  }
+
+  //while (CalibrationButton == 0) {
+  //  CalibrationButton = digitalRead(CalButton);
+  //}
   return output;
 }
 
@@ -66,34 +67,56 @@ void Test123()
   }
 }
 
-// Changes the calabration color values
-void Calibrate() {
+//Changes the calabration color values
+void Calibrate() 
+{
+  pinMode(14, OUTPUT);
   struct rawsensorreadings inputs = GetRawInput();
   float CallibrationButton = digitalRead(CalButton);
   int callibrationState = 0; //which color the colour sensors will calabrate next
-  while (true)
+  
+  while (callibrationState < 2)
   {
-    CallibrationButton = digitalRead(CalButton);
-    Serial.println("CalButton");
+    float CallibrationButton = digitalRead(CalButton);
+    Serial.println("Calabrate");
 
+    //Calabrates the white color when the button is pressed and it has not calabrated yet
     if (CallibrationButton == 0 && callibrationState == 0){
       WhiteCalibrationValues = GetCalibrationValues();
+
+      //Blinks the red LED
+      digitalWrite(14, HIGH);  
+      delay(1000);
+      digitalWrite(14, LOW);
+
       callibrationState = 1;
+      continue;
     }
-  }
 
-  if (CallibrationButton == 0 && hasCalibratedWhite == false){
+    //Calabrates black when the button is pressed and after it has calabrated white
+    if (CallibrationButton == 0 && callibrationState == 1)
+    {
+      BlackCalibrationValues = GetCalibrationValues();
 
-    WhiteCalibrationValues = GetCalibrationValues();
-    hasCalibratedWhite = true;
-  }
-  
-  if (CallibrationButton == 0 && hasCalibratedWhite == true){
+      //Blinks the red LED
+      digitalWrite(14, HIGH);  
+      delay(1000);
+      digitalWrite(14, LOW);
 
-    BlackCalibrationValues = GetCalibrationValues();
-    hasCalibratedWhite = false;
+      callibrationState = 2;
+      continue;
 
     }
+      //Serial.print("White");
+      //Serial.println(WhiteCalibrationValues.left);
+      //Serial.println(WhiteCalibrationValues.center);
+      //Serial.println(WhiteCalibrationValues.right);
+      //Serial.print("Black");
+      //Serial.println(BlackCalibrationValues.left);
+      //Serial.println(BlackCalibrationValues.center);
+      //Serial.println(BlackCalibrationValues.right);
+
+  }
     PrintReadings(WhiteCalibrationValues);
     PrintReadings(BlackCalibrationValues);
 
