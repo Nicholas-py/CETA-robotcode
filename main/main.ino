@@ -7,6 +7,8 @@
 Servo rServo;
 Servo lServo;
 
+
+
 #define SA0 A0
 #define SA1 A1
 #define SA2 A2
@@ -24,6 +26,8 @@ struct motorspeeds {
   float right;
 };
 
+struct motorspeeds stops = {90,90};
+float speedfactors[2] = {-31,-30}; 
 
 //When false will calabrate white, when true will calabrate black
 bool hasCalibratedWhite = false;
@@ -36,11 +40,9 @@ void setup() {
   Serial.begin(9600);
   delay(1000);
   Serial.println("Start");
-  lServo.write(0);
-  rServo.write(0);
   Serial.println("hiiiiii");
   delay(1000);
-  Calibrate();
+  //Calibrate();
   //Test123();
 
   //blink();
@@ -52,21 +54,28 @@ void setup() {
 void loop() {
     //Serial.print("'newcode");
     struct sensorreadings inputs = GetInput();
-    Serial.print("Left: ");
-    Serial.println(inputs.left);
+    Serial.print("Readings: Left: ");
+    Serial.print(inputs.left);
     Serial.print("Center: ");
-    Serial.println(inputs.center);
+    Serial.print(inputs.center);
     Serial.print("Right: ");
     Serial.println(inputs.right);
 
     struct motorspeeds speeds = MovementLogic(inputs);
+
+    Serial.print("Speeds: Left: ");
+    Serial.print(speeds.left);
+    Serial.print("Right: ");
+    Serial.println(speeds.right);
+
+
     SetMotorSpeeds(speeds);
     delay(100);
 }
 
 void SetMotorSpeeds(struct motorspeeds speeds) {
-  lServo.write(speeds.left);
-  rServo.write(speeds.right);
+  lServo.write(speeds.left *speedfactors[0]+stops.left);
+  rServo.write(speeds.right*speedfactors[1]+stops.right);
 }
 
 void blink() {

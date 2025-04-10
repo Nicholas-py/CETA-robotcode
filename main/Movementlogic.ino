@@ -1,15 +1,23 @@
-const int defaultspeed = 90;
-const int modifyspeed = 1;
+const float defaultspeed = 0.5;
+const float modifyspeed = 0.5;
+const float straighteningspeed = 100;
 
 float heading = 0;  //Measures drift
-float headingchange = 0.01f;
+int headingsign = 0;
+const float headingchange = 0.4f;
 
+float whiteoutthreshold = 1.2;
 
 struct motorspeeds MovementLogic(struct sensorreadings inputs) {
-  if (inputs.center + inputs.right + inputs.left < 0.5) {
+
+  Serial.print("Heading: ");
+  Serial.println(heading);
+
+  if (inputs.center + inputs.right + inputs.left < whiteoutthreshold && max(max(inputs.right, inputs.left), inputs.center) - min(min(inputs.right, inputs.left), inputs.center) < 0.3) {
+    heading = 0;
     return OnWhiteout(heading);
   } 
-  else if (inputs.center > inputs.right + inputs.left) {
+  else if (inputs.center > inputs.right + inputs.left || abs(inputs.right-inputs.left) < 0.2) {
     heading = OnPathStraight(heading);
   } 
   else if (inputs.right == inputs.left) {
@@ -19,7 +27,7 @@ struct motorspeeds MovementLogic(struct sensorreadings inputs) {
     heading = OnDrifting(heading, inputs.right < inputs.left, inputs.center < 0.5);
   }
   
-
+  headingsign = GetDirection(heading);
 
   struct motorspeeds toreturn = { defaultspeed + modifyspeed * heading, defaultspeed - modifyspeed * heading };
   return toreturn;
@@ -33,25 +41,35 @@ int GetDirection(float heading) {
   }
 }
 
-float straighteningspeed = 100;
-
+float aaaspeed = 1;
 struct motorspeeds OnWhiteout(float heading) {
-  if (heading < 0) {
-    struct motorspeeds uhoh = { defaultspeed, 0 };
+  Serial.println("WHITEOUT");
+  if (headingsign < 0) {
+    struct motorspeeds uhoh = {defaultspeed - aaaspeed,defaultspeed +aaaspeed};
     return uhoh;
   } else {
-    struct motorspeeds uhoh = { 0, defaultspeed };
+    struct motorspeeds uhoh = {defaultspeed + aaaspeed,defaultspeed -aaaspeed};
     return uhoh;
   }
 }
 
 float OnPathStraight(float heading) {
+  Serial.println("Straight");
   int direction = GetDirection(heading);
-  return heading - direction * max(straighteningspeed * headingchange, heading);
+  if (abs(straighteningspeed*headingchange) < abs(heading)){
+    return heading - direction * straighteningspeed * headingchange;}
+  else {
+    return 0;
+  }
 }
 
 float OnDrifting(float heading, bool toleft, bool strong) {
-  float multiplier = (int(toleft) - 1) * 2 * (int(strong) + 1);
+  Serial.println("Drifting");
+  int direction = 2*int(toleft)-1;
+  if (heading != 0 && int(heading/abs(heading)) == -direction ) {
+    return 0;
+  } 
+  float multiplier = direction * (int(strong) + 1);
   float change = multiplier * headingchange;
-  return heading + change;
+  return heading - change;
 }

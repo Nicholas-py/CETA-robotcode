@@ -10,7 +10,7 @@ struct rawsensorreadings {
 };
 
 
-struct rawsensorreadings WhiteCalibrationValues = {450, 450, 550};
+struct rawsensorreadings WhiteCalibrationValues = {450, 450, 500};
 struct rawsensorreadings BlackCalibrationValues = {950, 950, 950};
 
 
@@ -36,6 +36,16 @@ void PrintReadings(struct rawsensorreadings thingy) {
   Serial.print(thingy.right);
   Serial.println(")");
 }
+void PrintReadings2(struct sensorreadings thingy) {
+  Serial.print("(");
+  Serial.print(thingy.left);
+  Serial.print(", ");
+  Serial.print(thingy.center);
+  Serial.print(", ");
+  Serial.print(thingy.right);
+  Serial.println(")");
+}
+
 
 
 struct sensorreadings MapSensorTo01(struct rawsensorreadings sensorval) {
@@ -78,7 +88,8 @@ void Calibrate()
   while (callibrationState < 2)
   {
     float CallibrationButton = digitalRead(CalButton);
-    Serial.println("Calabrate");
+    Serial.print("Calibrate White: ");
+    Serial.println(callibrationState);
 
     //Calabrates the white color when the button is pressed and it has not calabrated yet
     if (CallibrationButton == 0 && callibrationState == 0){
@@ -119,7 +130,7 @@ void Calibrate()
   }
     PrintReadings(WhiteCalibrationValues);
     PrintReadings(BlackCalibrationValues);
-
+    delay(1000);
 }
 
 
