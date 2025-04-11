@@ -14,7 +14,7 @@ struct unadjustedLightSensorReadings WhiteCalibrationValues = {450, 450, 500};
 struct unadjustedLightSensorReadings BlackCalibrationValues = {950, 950, 950};
 
 
-struct lightSensorReadings GetCalabratedSensorInputs() {
+struct lightSensorReadings GetCalibratedSensorInputs() {
   struct unadjustedLightSensorReadings sensorinputs = GetRawSensorInput();
   struct lightSensorReadings output = MapSensorReadings(sensorinputs);
   return output;
@@ -65,24 +65,24 @@ struct lightSensorReadings MapSensorReadings(struct unadjustedLightSensorReading
   return output;
 }
 
-//Changes the calabration color values
+//Changes the Calibrattion color values
 bool CalibrateLightSensors() 
 {
   pinMode(14, OUTPUT);
   struct unadjustedLightSensorReadings inputs = GetRawSensorInput();
-  float CallibrationButton = digitalRead(CalButton);
-  int callibrationState = 0; //which color the colour sensors will calabrate next
+  float CalibrationButton = digitalRead(CalButton);
+  int CalibrationState = 0; //which color the colour sensors will Calibratte next
   int adjustmentValue = 50;
 
   
-  while (callibrationState < 2)
+  while (CalibrationState < 2)
   {
-    float CallibrationButton = digitalRead(CalButton);
+    float CalibrationButton = digitalRead(CalButton);
     Serial.print("Calibrate White: ");
-    Serial.println(callibrationState);
+    Serial.println(CalibrationState);
 
-    //Calabrates the white color when the button is pressed and it has not calabrated yet
-    if (CallibrationButton == 0 && callibrationState == 0){
+    //Calibrattes the white color when the button is pressed and it has not Calibrated yet
+    if (CalibrationButton == 0 && CalibrationState == 0){
       WhiteCalibrationValues = GetRawSensorInput();
 
       //Blinks the red LED
@@ -90,12 +90,12 @@ bool CalibrateLightSensors()
       delay(1000);
       digitalWrite(14, LOW);
 
-      callibrationState = 1;
+      CalibrationState = 1;
       continue;
     }
 
-    //Calabrates black when the button is pressed and after it has calabrated white
-    if (CallibrationButton == 0 && callibrationState == 1)
+    //Calibrates black when the button is pressed and after it has Calibrated white
+    if (CalibrationButton == 0 && CalibrationState == 1)
     {
       BlackCalibrationValues = GetRawSensorInput();
 
@@ -104,7 +104,7 @@ bool CalibrateLightSensors()
       delay(1000);
       digitalWrite(14, LOW);
 
-      callibrationState = 2;
+      CalibrationState = 2;
       continue;
 
     }

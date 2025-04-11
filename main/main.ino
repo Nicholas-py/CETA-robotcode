@@ -26,7 +26,8 @@ struct motorspeeds {
   float right;
 };
 
-bool hasCalabratedLightSensors = false;
+bool hasCalibratedLightSensors = false;
+bool willCalibrate = false;
 
 void setup() {
 
@@ -36,14 +37,15 @@ void setup() {
   delay(1000);
   Serial.println("Start");
   delay(1000);
-  hasCalabratedLightSensors = CalibrateLightSensors();
+  if (willCalibrate) {
+  hasCalibratedLightSensors = CalibrateLightSensors();}
 
 }
 
 
 
 void loop() {
-    struct lightSensorReadings inputs = GetCalabratedSensorInputs();
+    struct lightSensorReadings inputs = GetCalibratedSensorInputs();
     
     Serial.print("Readings: Left: ");
     Serial.print(inputs.left);
@@ -69,7 +71,7 @@ float speedAdjustmentFactor[2] = {-31,-30};
 
 void SetMotorSpeeds(struct motorspeeds newMotorSpeeds) 
 {
-  if (hasCalabratedLightSensors == true)
+  if (hasCalibratedLightSensors || !willCalibrate)
   {
   lServo.write(newMotorSpeeds.left  * speedAdjustmentFactor[0] + stopSpeeds.left);
   rServo.write(newMotorSpeeds.right * speedAdjustmentFactor[1] + stopSpeeds.right);
