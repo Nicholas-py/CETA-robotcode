@@ -15,7 +15,7 @@ Servo lServo;
 
 
 
-struct sensorreadings {
+struct lightSensorReadings {
   float left;
   float center;
   float right;
@@ -26,64 +26,58 @@ struct motorspeeds {
   float right;
 };
 
-struct motorspeeds stops = {90,90};
-float speedfactors[2] = {-31,-30}; 
-
-//When false will calabrate white, when true will calabrate black
-bool hasCalibratedWhite = false;
+bool hasCalabratedLightSensors = false;
 
 void setup() {
-
 
   lServo.attach(5);
   rServo.attach(4);
   Serial.begin(9600);
   delay(1000);
   Serial.println("Start");
-  Serial.println("hiiiiii");
   delay(1000);
-  //Calibrate();
-  //Test123();
-
-  //blink();
+  hasCalabratedLightSensors = CalibrateLightSensors();
 
 }
 
 
 
 void loop() {
-    //Serial.print("'newcode");
-    struct sensorreadings inputs = GetInput();
+    struct lightSensorReadings inputs = GetCalabratedSensorInputs();
+    
     Serial.print("Readings: Left: ");
     Serial.print(inputs.left);
-    Serial.print("Center: ");
+    Serial.print(" Center: ");
     Serial.print(inputs.center);
-    Serial.print("Right: ");
+    Serial.print(" Right: ");
     Serial.println(inputs.right);
 
-    struct motorspeeds speeds = MovementLogic(inputs);
+    struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
 
     Serial.print("Speeds: Left: ");
-    Serial.print(speeds.left);
-    Serial.print("Right: ");
-    Serial.println(speeds.right);
+    Serial.print(newMotorSpeeds.left);
+    Serial.print(" Right: ");
+    Serial.println(newMotorSpeeds.right);
 
 
-    SetMotorSpeeds(speeds);
+    SetMotorSpeeds(newMotorSpeeds);
     delay(100);
 }
 
-void SetMotorSpeeds(struct motorspeeds speeds) {
-  lServo.write(speeds.left *speedfactors[0]+stops.left);
-  rServo.write(speeds.right*speedfactors[1]+stops.right);
-}
+struct motorspeeds stopSpeeds = {90,90};
+float speedAdjustmentFactor[2] = {-31,-30}; 
 
-void blink() {
-  pinMode(14, OUTPUT);
-  while (true) {
-    digitalWrite(14, HIGH);  
-    delay(500);
-    digitalWrite(14, LOW);
-    delay(500);   }                    
+void SetMotorSpeeds(struct motorspeeds newMotorSpeeds) 
+{
+  if (hasCalabratedLightSensors == true)
+  {
+  lServo.write(newMotorSpeeds.left  * speedAdjustmentFactor[0] + stopSpeeds.left);
+  rServo.write(newMotorSpeeds.right * speedAdjustmentFactor[1] + stopSpeeds.right);
+  }
+  else
+  {
+    lServo.write(stopSpeeds.left);
+    rServo.write(stopSpeeds.right);
+  }
 }
 

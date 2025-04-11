@@ -8,7 +8,7 @@ const float headingchange = 0.4f;
 
 float whiteoutthreshold = 1.2;
 
-struct motorspeeds MovementLogic(struct sensorreadings inputs) {
+struct motorspeeds MovementLogic(struct lightSensorReadings inputs) {
 
   Serial.print("Heading: ");
   Serial.println(heading);
@@ -17,7 +17,7 @@ struct motorspeeds MovementLogic(struct sensorreadings inputs) {
     heading = 0;
     return OnWhiteout(heading);
   } 
-  else if (inputs.center > inputs.right + inputs.left || abs(inputs.right-inputs.left) < 0.2) {
+  else if (  inputs.center > inputs.right + inputs.left || abs(inputs.right-inputs.left) < 0.2) {
     heading = OnPathStraight(heading);
   } 
   else if (inputs.right == inputs.left) {
