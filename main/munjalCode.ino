@@ -3,6 +3,7 @@
 //These two variables should retain their values each time the code loops (no reset). Their initial value should be 0
 float leftError = 0;
 float rightError = 0;
+float maxError = 100;
 
 float multiplier = 0.05;
 float constant = 0.5;
@@ -22,7 +23,7 @@ struct motorspeeds mujalMovment(struct lightSensorReadings inputs)
   if (inputs.left > BTH && inputs.right <= BTH)
   {
     rightError += 1;
-    rightError = min(rightError, 10);
+    rightError = min(rightError, maxError);
     leftError = 0;
   }
  
@@ -30,7 +31,7 @@ struct motorspeeds mujalMovment(struct lightSensorReadings inputs)
   else if (inputs.left <= BTH && inputs.right > BTH)
   {
     leftError += 1;
-    leftError = min(leftError, 10);
+    leftError = min(leftError, maxError);
     rightError = 0;
   }
  
@@ -46,11 +47,11 @@ struct motorspeeds mujalMovment(struct lightSensorReadings inputs)
   {
     if (leftError != 0) {
       leftError += 1;
-      leftError = min(leftError, 10);
+      leftError = min(leftError, maxError);
     }
     else if (rightError != 0) {
       rightError += 1;
-      rightError = min(rightError, 10);
+      rightError = min(rightError, maxError);
     }
   }
 
