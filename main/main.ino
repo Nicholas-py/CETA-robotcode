@@ -27,7 +27,7 @@ struct motorspeeds {
 };
 
 bool hasCalibratedLightSensors = false;
-bool willCalibrate = false;
+bool willCalibrate = true;
 
 void setup() {
 
@@ -54,7 +54,7 @@ void loop() {
     Serial.print(" Right: ");
     Serial.println(inputs.right);
 
-    struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
+    struct motorspeeds newMotorSpeeds = testMovement(inputs);
 
     Serial.print("Speeds: Left: ");
     Serial.print(newMotorSpeeds.left);
@@ -67,7 +67,7 @@ void loop() {
 }
 
 struct motorspeeds stopSpeeds = {90,90};
-float speedAdjustmentFactor[2] = {-31,-30}; 
+float speedAdjustmentFactor[2] = {-10,-10}; 
 
 void SetMotorSpeeds(struct motorspeeds newMotorSpeeds) 
 {
