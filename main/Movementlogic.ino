@@ -15,7 +15,9 @@ struct motorspeeds MovementLogic(struct lightSensorReadings inputs) {
 
   Serial.print("Heading: ");
   Serial.println(heading);
-
+  if (SensorsDetectBlack(inputs)) {
+    return EXECUTE_TURNAROUND;
+  }
   if (SensorsDetectWhite(inputs)) {
     return OnWhiteout(heading); 
   } 
@@ -23,8 +25,8 @@ struct motorspeeds MovementLogic(struct lightSensorReadings inputs) {
     heading = 0;
     panickingquantity = 0;
     return {0,0};
-
   }
+
   else if (SensorsDetectStraight(inputs)) {
     heading = OnPathStraight(heading);
   } 
@@ -47,6 +49,11 @@ int sgn(float heading) {
   } else {
     return 0;
   }
+}
+
+bool SensorsDetectBlack(struct lightSensorReadings inputs) {
+  float maximum = max(max(inputs.center,inputs.left),inputs.right);
+  return maximum > 1-whitethreshold;
 }
 
 bool SensorsDetectWhite(struct lightSensorReadings inputs) {

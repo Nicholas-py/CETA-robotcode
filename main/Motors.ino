@@ -10,7 +10,7 @@ void MotorSetup() {
   lServo.attach(5);
 }
 
-void SetMotorSpeeds(struct motorspeeds newMotorSpeeds) 
+void SetMotors(struct motorspeeds newMotorSpeeds) 
 {
   lServo.write(newMotorSpeeds.left  * speedAdjustmentFactor[0] + stopSpeeds.left);
   rServo.write(newMotorSpeeds.right * speedAdjustmentFactor[1] + stopSpeeds.right);
@@ -18,7 +18,10 @@ void SetMotorSpeeds(struct motorspeeds newMotorSpeeds)
 }
 
 
-
+void TurnAround() {
+    SetMotors({1,1});
+    delay(100000);
+}
 
 void PrintMotorSpeeds(struct motorspeeds toprint) {
       Serial.print("Speeds: Left: ");
@@ -27,3 +30,4 @@ void PrintMotorSpeeds(struct motorspeeds toprint) {
     Serial.println(toprint.right);
 
 }
+
