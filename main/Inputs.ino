@@ -1,7 +1,7 @@
 #define CalButton 15
-#define leftSensor SA1
-#define centerSensor SA0
-#define rightSensor SA2
+#define leftSensor A1
+#define centerSensor A0
+#define rightSensor A2
 
 struct unadjustedLightSensorReadings {
   int left;

@@ -1,20 +1,6 @@
 #include <Servo.h>
 
 
-//int Lspeeds[1] = [-20];
-//int Rspeeds[1] = [-20];
-
-Servo rServo;
-Servo lServo;
-
-
-
-#define SA0 A0
-#define SA1 A1
-#define SA2 A2
-
-
-
 struct lightSensorReadings {
   float left;
   float center;
@@ -26,55 +12,34 @@ struct motorspeeds {
   float right;
 };
 
-bool hasCalibratedLightSensors = false;
-bool willCalibrate = true;
+bool needsToCalibrate = false;
 
 void setup() {
 
-  lServo.attach(5);
-  rServo.attach(4);
   Serial.begin(9600);
   delay(1000);
   Serial.println("Start");
   delay(1000);
-  if (willCalibrate) {
-  hasCalibratedLightSensors = CalibrateLightSensors();}
+
+  MotorSetup();
+  if (needsToCalibrate) {
+    CalibrateLightSensors();
+    needsToCalibrate = false;
+  }
+  
 
 }
 
 
 
 void loop() {
-    struct lightSensorReadings inputs = GetCalibratedSensorInputs();
+  struct lightSensorReadings inputs = GetCalibratedSensorInputs();
     
+  struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
 
-    struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
-
-    Serial.print("Speeds: Left: ");
-    Serial.print(newMotorSpeeds.left);
-    Serial.print(" Right: ");
-    Serial.println(newMotorSpeeds.right);
-
-
+  if (!needsToCalibrate) {
     SetMotorSpeeds(newMotorSpeeds);
-    delay(50);
-}
-
-struct motorspeeds stopSpeeds = {90,90};
-float speedAdjustmentFactor[2] = {-20,-20}; 
-
-
-void SetMotorSpeeds(struct motorspeeds newMotorSpeeds) 
-{
-  if (hasCalibratedLightSensors || !willCalibrate)
-  {
-  lServo.write(newMotorSpeeds.left  * speedAdjustmentFactor[0] + stopSpeeds.left);
-  rServo.write(newMotorSpeeds.right * speedAdjustmentFactor[1] + stopSpeeds.right);
   }
-  else
-  {
-    lServo.write(stopSpeeds.left);
-    rServo.write(stopSpeeds.right);
-  }
-}
 
+  delay(5);
+}
