@@ -8,6 +8,9 @@ const float headingchange = 0.1f;
 
 float whiteoutthreshold = 1.2;
 
+int panickingquantity = 0;
+int panickingthreshold = 15;
+
 struct motorspeeds MovementLogic(struct lightSensorReadings inputs) {
 
   Serial.print("Heading: ");
@@ -41,9 +44,10 @@ int GetDirection(float heading) {
   }
 }
 
-float aaaspeed = 0.7;
+float aaaspeed = 1.5;
 struct motorspeeds OnWhiteout(float heading) {
   Serial.println("WHITEOUT");
+  panickingquantity += 1;
   if (headingsign < 0) {
     struct motorspeeds uhoh = {defaultspeed - aaaspeed,defaultspeed +aaaspeed};
     return uhoh;
@@ -51,6 +55,10 @@ struct motorspeeds OnWhiteout(float heading) {
     struct motorspeeds uhoh = {defaultspeed + aaaspeed,defaultspeed -aaaspeed};
     return uhoh;
   }
+}
+
+bool Panicking() {
+  return (panickingquantity > panickingthreshold);
 }
 
 float OnPathStraight(float heading) {

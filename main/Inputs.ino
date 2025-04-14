@@ -17,6 +17,7 @@ struct unadjustedLightSensorReadings BlackCalibrationValues = {950, 950, 950};
 struct lightSensorReadings GetCalibratedSensorInputs() {
   struct unadjustedLightSensorReadings sensorinputs = GetRawSensorInput();
   struct lightSensorReadings output = MapSensorReadings(sensorinputs);
+  PrintReadings2(output);
   return output;
 }
 

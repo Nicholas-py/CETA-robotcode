@@ -47,12 +47,6 @@ void setup() {
 void loop() {
     struct lightSensorReadings inputs = GetCalibratedSensorInputs();
     
-    Serial.print("Readings: Left: ");
-    Serial.print(inputs.left);
-    Serial.print(" Center: ");
-    Serial.print(inputs.center);
-    Serial.print(" Right: ");
-    Serial.println(inputs.right);
 
     struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
 
