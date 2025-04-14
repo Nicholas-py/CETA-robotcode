@@ -9,21 +9,21 @@ struct motorspeeds testMovement(struct lightSensorReadings inputs)
   {
     newMotorSpeeds = {1, 1};
   }
-  //else if (inputs.left > blackThreshhold && inputs.center > blackThreshhold && inputs.right > blackThreshhold)
-  //{
-  //  newMotorSpeeds = {0, 0};
-  //}
+  else if (inputs.left > blackThreshhold && inputs.center > blackThreshhold && inputs.right > blackThreshhold)
+  {
+    newMotorSpeeds = {0.5, 0.5};
+  }
   else if (inputs.left > blackThreshhold && inputs.right <= blackThreshhold)
   {
-    newMotorSpeeds = {0, 1};
+    newMotorSpeeds = {0, 0.5};
   }
   else if (inputs.left <= blackThreshhold && inputs.right > blackThreshhold)
   {
-    newMotorSpeeds = {1, 0};
+    newMotorSpeeds = {0.5, 0};
   }
   else
   {
-    newMotorSpeeds = {1, 1};
+    newMotorSpeeds = {-0.5, -0.5};
   }
 
   return newMotorSpeeds;

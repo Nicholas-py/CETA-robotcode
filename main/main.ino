@@ -63,11 +63,11 @@ void loop() {
 
 
     SetMotorSpeeds(newMotorSpeeds);
-    delay(100);
+    delay(50);
 }
 
 struct motorspeeds stopSpeeds = {90,90};
-float speedAdjustmentFactor[2] = {-10,-10}; 
+float speedAdjustmentFactor[2] = {-20,-20}; 
 
 void SetMotorSpeeds(struct motorspeeds newMotorSpeeds) 
 {
