@@ -1,10 +1,10 @@
-const float defaultspeed = 0.5;
-const float modifyspeed = 0.5;
+const float defaultspeed = 1;
+const float modifyspeed = 0.3;
 const float straighteningspeed = 100;
 
 float heading = 0;  //Measures drift
 int headingsign = 0;
-const float headingchange = 0.4f;
+const float headingchange = 0.1f;
 
 float whiteoutthreshold = 1.2;
 
@@ -17,7 +17,7 @@ struct motorspeeds MovementLogic(struct lightSensorReadings inputs) {
     heading = 0;
     return OnWhiteout(heading);
   } 
-  else if (  inputs.center > inputs.right + inputs.left || abs(inputs.right-inputs.left) < 0.2) {
+  else if (  inputs.center > inputs.right + inputs.left || abs(inputs.right-inputs.left) < 0.2 && inputs.center > 0.2) {
     heading = OnPathStraight(heading);
   } 
   else if (inputs.right == inputs.left) {
@@ -41,7 +41,7 @@ int GetDirection(float heading) {
   }
 }
 
-float aaaspeed = 1;
+float aaaspeed = 0.7;
 struct motorspeeds OnWhiteout(float heading) {
   Serial.println("WHITEOUT");
   if (headingsign < 0) {
@@ -66,8 +66,8 @@ float OnPathStraight(float heading) {
 float OnDrifting(float heading, bool toleft, bool strong) {
   Serial.println("Drifting");
   int direction = 2*int(toleft)-1;
-  if (heading != 0 && int(heading/abs(heading)) == -direction ) {
-    return 0;
+  if (heading != 0 && int(heading/abs(heading)) == direction ) {
+    return -direction * 0.01;
   } 
   float multiplier = direction * (int(strong) + 1);
   float change = multiplier * headingchange;
