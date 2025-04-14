@@ -54,7 +54,7 @@ void loop() {
     Serial.print(" Right: ");
     Serial.println(inputs.right);
 
-    struct motorspeeds newMotorSpeeds = testMovement(inputs);
+    struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
 
     Serial.print("Speeds: Left: ");
     Serial.print(newMotorSpeeds.left);
@@ -68,6 +68,7 @@ void loop() {
 
 struct motorspeeds stopSpeeds = {90,90};
 float speedAdjustmentFactor[2] = {-20,-20}; 
+
 
 void SetMotorSpeeds(struct motorspeeds newMotorSpeeds) 
 {
