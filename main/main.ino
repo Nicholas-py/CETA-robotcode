@@ -37,7 +37,7 @@ void setup() {
 
 void loop() {
   struct lightSensorReadings inputs = GetCalibratedSensorInputs();
-  struct motorspeeds newMotorSpeeds = mujalMovment(inputs);
+  struct motorspeeds newMotorSpeeds = munjalMovement(inputs);
   
   if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
     TurnAround();
@@ -47,5 +47,5 @@ void loop() {
     SetMotors(newMotorSpeeds);
   }
 
-  delay(50);
+  delay(10);
 }
