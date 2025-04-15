@@ -15,7 +15,7 @@ struct motorspeeds {
 struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeholder, this is essentially an error code
 int turnaroundcount = 0;
 
-bool needsToCalibrate = false;
+bool needsToCalibrate = true;
 
 void setup() {
 
@@ -37,7 +37,7 @@ void setup() {
 
 void loop() {
   struct lightSensorReadings inputs = GetCalibratedSensorInputs();
-  struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
+  struct motorspeeds newMotorSpeeds = mujalMovment(inputs);
   
   if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
     TurnAround();

@@ -1,38 +1,30 @@
-//some general ideas to improve the movement code
+//This probably won't work but hooray if it does!
 
-//These two variables should retain their values each time the code loops (no reset). Their initial value should be 0
 float leftError = 0;
 float rightError = 0;
-float maxError = 100;
 
-float multiplier = 0.05;
-float constant = 0.5;
+float multiplier = 0.2;
+float constant = 1;
 float BTH = 0.5;
+float correction = 1;
+float aggressiveCorrection = 2.5;
 
 struct motorspeeds mujalMovment(struct lightSensorReadings inputs)
 {
   struct motorspeeds newMotorSpeeds = {0,0};
  
-  // //All three black means stop
-  // if (inputs.left >= BTH && inputs.center >= BTH && inputs.right >= BTH)
-  // {
-  //   newMotorSpeeds = {0, 0};
-  // }
- 
   //Robot deviated right
   if (inputs.left > BTH && inputs.right <= BTH)
   {
-    rightError += 1;
-    rightError = min(rightError, maxError);
-    leftError = 0;
+    rightError = correction;
+    leftError = -correction;
   }
  
   //Robot deviated left
   else if (inputs.left <= BTH && inputs.right > BTH)
   {
-    leftError += 1;
-    leftError = min(leftError, maxError);
-    rightError = 0;
+    leftError = correction;
+    rightError = -correction;
   }
  
   //Robot on track
@@ -45,17 +37,23 @@ struct motorspeeds mujalMovment(struct lightSensorReadings inputs)
   //Robot sees all three white
   else if (inputs.left < BTH && inputs.right < BTH && inputs.center < BTH)
   {
-    if (leftError != 0) {
-      leftError += 1;
-      leftError = min(leftError, maxError);
+    if (leftError == correction) {
+      leftError = aggressiveCorrection;
+      rightError = -aggressiveCorrection;
     }
-    else if (rightError != 0) {
-      rightError += 1;
-      rightError = min(rightError, maxError);
+    else if (rightError == correction) {
+      rightError = aggressiveCorrection;
+      leftError = -aggressiveCorrection;
     }
   }
 
   newMotorSpeeds = {constant+multiplier*leftError, constant+multiplier*rightError};
+
+  //All three black means stop
+  if (inputs.left >= BTH && inputs.center >= BTH && inputs.right >= BTH)
+  {
+    newMotorSpeeds = {0, 0};
+  }
 
   return newMotorSpeeds;
 }
