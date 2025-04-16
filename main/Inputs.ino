@@ -10,8 +10,8 @@ struct unadjustedLightSensorReadings {
 };
 
 
-struct unadjustedLightSensorReadings WhiteCalibrationValues = {450, 450, 500};
-struct unadjustedLightSensorReadings BlackCalibrationValues = {950, 950, 950};
+struct unadjustedLightSensorReadings WhiteCalibrationValues = {594, 520, 652};
+struct unadjustedLightSensorReadings BlackCalibrationValues = {950, 943, 961};
 
 
 struct lightSensorReadings GetCalibratedSensorInputs() {

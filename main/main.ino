@@ -21,10 +21,11 @@ enum State {
 
 enum State state = FOLLOWING;
 
-struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeholder, this is essentially an error code
+struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeholder, this is an error code
 int turnaroundcount = 0;
 
 bool needsToCalibrate = true;
+bool stopAfterTwo = true;
 
 void setup() {
 
@@ -59,8 +60,14 @@ void OnStateFollowing() {
   struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
 
   if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
+    if (turnaroundcount < 1 || !stopAfterTwo){
     SwitchState(TURNING);
     TurnAround();}
+    }
+    else {
+      state = STOPPED;
+      SetMotors({0,0});
+    }
 
   SetMotors(newMotorSpeeds);
 
