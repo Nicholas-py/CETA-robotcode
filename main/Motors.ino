@@ -1,5 +1,5 @@
 struct motorspeeds stopSpeeds = {90,90};
-float speedAdjustmentFactor[2] = {-20,-20}; 
+float speedAdjustmentFactor[2] = {-21,-20}; 
 
 
 Servo rServo;
@@ -20,10 +20,13 @@ void SetMotors(struct motorspeeds newMotorSpeeds)
 
 void TurnAround() {
     SetMotors({1,1});
-    delay(3000);
-    SetMotors({-1,1});
-    delay(6000);
+    delay(1400);
     SetMotors({0,0});
+    delay(300);
+    SetMotors({-1,1});
+    delay(1150);
+    SetMotors({0,0});
+    delay(300);
     SwitchState(FOLLOWING);
 }
 

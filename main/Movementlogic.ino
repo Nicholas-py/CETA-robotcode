@@ -1,12 +1,16 @@
 const float defaultspeed = 1;
-const float turnspeed = 0.3;
-const float straighteningspeed = 100;
+const float turnspeed = 0.1;
+const float straighteningspeed = 10;
 
 float heading = 0;  
-const float headingchange = 0.1f;
+const float headingchange = 0.05f;
 
 float whitethreshold = 0.3;
 float whiteoutspeed = 1.5;
+
+int blackseeingquantity = 0;
+int blackquantitythreshold = 5;
+float blackthreshold = 0.8;
 
 int panickingquantity = 0;
 int panickingthreshold = 15;
@@ -15,10 +19,10 @@ struct motorspeeds MovementLogic(struct lightSensorReadings inputs) {
 
   Serial.print("Heading: ");
   Serial.println(heading);
-  if (SensorsDetectBlack(inputs)) {
+  if (ShouldTurnAround(inputs)) {
     return EXECUTE_TURNAROUND;
   }
-  if (SensorsDetectWhite(inputs)) {
+  if (SensorsDetectAllWhite(inputs)) {
     return OnWhiteout(heading); 
   } 
   else if (Panicking()) {
@@ -51,14 +55,24 @@ int sgn(float heading) {
   }
 }
 
-bool SensorsDetectBlack(struct lightSensorReadings inputs) {
-  float maximum = max(max(inputs.center,inputs.left),inputs.right);
-  return maximum > 1-whitethreshold;
+bool ShouldTurnAround(struct lightSensorReadings inputs) {
+  float minimum = min(min(inputs.center,inputs.left),inputs.right);
+
+  if (minimum > blackthreshold) {
+    blackseeingquantity++;
+    if (blackseeingquantity > blackquantitythreshold) {
+      return true;
+    }
+  }
+  else {
+    blackseeingquantity = 0;
+  }
+  return false;
 }
 
-bool SensorsDetectWhite(struct lightSensorReadings inputs) {
-  float minimum = min(min(inputs.center,inputs.left),inputs.right);
-  return minimum < whitethreshold;
+bool SensorsDetectAllWhite(struct lightSensorReadings inputs) {
+  float maximum = max(max(inputs.center,inputs.left),inputs.right);
+  return maximum < whitethreshold;
 
 }
 
