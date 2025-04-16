@@ -12,6 +12,15 @@ struct motorspeeds {
   float right;
 };
 
+enum State {
+  STOPPED,
+  FOLLOWING,
+  TURNING,
+  CALIBRATING
+};
+
+enum State state = FOLLOWING;
+
 struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeholder, this is essentially an error code
 int turnaroundcount = 0;
 
@@ -26,8 +35,9 @@ void setup() {
 
   MotorSetup();
   if (needsToCalibrate) {
+    state = CALIBRATING;
     CalibrateLightSensors();
-    needsToCalibrate = false;
+    state = FOLLOWING;
   }
   
 
@@ -36,16 +46,26 @@ void setup() {
 
 
 void loop() {
-  struct lightSensorReadings inputs = GetCalibratedSensorInputs();
-  struct motorspeeds newMotorSpeeds = munjalMovement(inputs);
-  
-  if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
-    TurnAround();
+  if (state == FOLLOWING) {
+    OnStateFollowing();
   }
   
-  if (!needsToCalibrate) {
-    SetMotors(newMotorSpeeds);
-  }
-
+  
   delay(10);
+}
+
+void OnStateFollowing() {
+  struct lightSensorReadings inputs = GetCalibratedSensorInputs();
+  struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
+
+  if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
+    SwitchState(TURNING);
+    TurnAround();}
+
+  SetMotors(newMotorSpeeds);
+
+}
+
+void SwitchState(enum State newstate) {
+  state = newstate;
 }

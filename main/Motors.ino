@@ -20,7 +20,11 @@ void SetMotors(struct motorspeeds newMotorSpeeds)
 
 void TurnAround() {
     SetMotors({1,1});
-    delay(100000);
+    delay(3000);
+    SetMotors({-1,1});
+    delay(6000);
+    SetMotors({0,0});
+    SwitchState(FOLLOWING);
 }
 
 void PrintMotorSpeeds(struct motorspeeds toprint) {
