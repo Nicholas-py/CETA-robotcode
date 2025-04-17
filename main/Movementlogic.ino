@@ -1,12 +1,12 @@
-const float defaultspeed = 1;
-const float turnspeed = 0.1;
-const float straighteningspeed = 10;
+const float defaultspeed = 1.6;
+const float turnspeed = 0.05;
+const float straighteningspeed = 1000;
 
 float heading = 0;  
 const float headingchange = 0.05f;
 
 float whitethreshold = 0.3;
-float whiteoutspeed = 1.5;
+float whiteoutspeed = 4;
 
 int blackseeingquantity = 0;
 int blackquantitythreshold = 5;

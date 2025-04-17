@@ -1,24 +1,25 @@
 float leftError = 0;
 float rightError = 0;
-float stopSequence = 0; //0 means no intention to stop, 1 means stop warning, 2 means stop
+float stop = 0;
+float stopTH = 3;
 float BTH = 0.5;
-float multiplier = 0.2;
+float multiplier = 0.4;
 
-float constant = 1;
+float constant = 2;
 float correction = 1;
 float aggressiveCorrection = 2.5;
 
-struct motorspeeds munjalMovement(struct lightSensorReadings inputs)
+struct motorspeeds mujalMovement(struct lightSensorReadings inputs)
 {
   struct motorspeeds newMotorSpeeds = {0,0};
  
-  //Two of three are sensors are black
-  if ((inputs.left >= BTH && inputs.center >= BTH) || (inputs.center >= BTH && inputs.right >= BTH) || (inputs.left >= BTH && inputs.right >= BTH))
+  //All three are sensors are black
+  if (inputs.left >= BTH && inputs.center >= BTH && inputs.right >= BTH)
   {
-    stopSequence = 1;
+    stop += 1;
   }
   else {
-    stopSequence = 0;
+    stop = 0;
   }
   
   //Robot deviated right
@@ -53,14 +54,11 @@ struct motorspeeds munjalMovement(struct lightSensorReadings inputs)
       rightError = aggressiveCorrection;
       leftError = -aggressiveCorrection;
     }
-    if (stopSequence == 1) {
-      stopSequence = 2;
-    }
   }
 
   //Decide what to return
-  if (stopSequence == 2) {
-    newMotorSpeeds = {0, 0}; //Stop the robot
+  if (stop >= stopTH) {
+    return EXECUTE_TURNAROUND;
   }
   else {
     newMotorSpeeds = {constant+multiplier*leftError, constant+multiplier*rightError}; //Run the robot as normal

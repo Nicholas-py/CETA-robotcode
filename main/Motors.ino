@@ -19,15 +19,18 @@ void SetMotors(struct motorspeeds newMotorSpeeds)
 
 
 void TurnAround() {
-    SetMotors({1,1});
-    delay(1400); //How long to go straight
-    SetMotors({0,0});
-    delay(300);
-    SetMotors({-1,1});
-    delay(1200); //How long to turn
-    SetMotors({0,0});
-    delay(300);
-    SwitchState(FOLLOWING);
+  SetMotors({1,1});
+  delay(1400); //How long to go straight
+  SetMotors({0,0});
+  delay(300);
+  SetMotors({-1,1});
+  delay(600);
+  while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
+    delay(10);
+  }
+  SetMotors({0,0});
+  delay(300);
+  SwitchState(FOLLOWING);
 }
 
 void PrintMotorSpeeds(struct motorspeeds toprint) {

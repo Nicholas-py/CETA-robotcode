@@ -52,23 +52,23 @@ void loop() {
   }
   
   
-  delay(10);
+  delay(3);
 }
 
 void OnStateFollowing() {
   struct lightSensorReadings inputs = GetCalibratedSensorInputs();
-  struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
+  struct motorspeeds newMotorSpeeds = mujalMovement(inputs);
 
   if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
     if (turnaroundcount < 1 || !stopAfterTwo){
     SwitchState(TURNING);
     TurnAround();}
-    }
+    
     else {
       state = STOPPED;
       SetMotors({0,0});
     }
-
+  }
   SetMotors(newMotorSpeeds);
 
 }
