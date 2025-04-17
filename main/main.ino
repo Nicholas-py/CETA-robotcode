@@ -24,7 +24,7 @@ enum State state = FOLLOWING;
 struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeholder, this is an error code
 int turnaroundcount = 0;
 
-bool needsToCalibrate = true;
+bool needsToCalibrate = false;
 bool stopAfterTwo = true;
 
 void setup() {
@@ -50,19 +50,23 @@ void loop() {
   if (state == FOLLOWING) {
     OnStateFollowing();
   }
+  else if (state == STOPPED) {
+    SetMotors({0,0});
+  }
   
   
-  delay(3);
+  delay(5);
 }
 
 void OnStateFollowing() {
   struct lightSensorReadings inputs = GetCalibratedSensorInputs();
-  struct motorspeeds newMotorSpeeds = mujalMovement(inputs);
+  struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
 
   if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
     if (turnaroundcount < 1 || !stopAfterTwo){
     SwitchState(TURNING);
-    TurnAround();}
+    TurnAround();
+    turnaroundcount++;}
     
     else {
       state = STOPPED;

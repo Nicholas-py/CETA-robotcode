@@ -14,7 +14,7 @@ void SetMotors(struct motorspeeds newMotorSpeeds)
 {
   lServo.write(newMotorSpeeds.left  * speedAdjustmentFactor[0] + stopSpeeds.left);
   rServo.write(newMotorSpeeds.right * speedAdjustmentFactor[1] + stopSpeeds.right);
-  PrintMotorSpeeds(newMotorSpeeds);
+  //PrintMotorSpeeds(newMotorSpeeds);
 }
 
 

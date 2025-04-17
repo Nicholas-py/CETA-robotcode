@@ -1,12 +1,12 @@
 const float defaultspeed = 1.6;
-const float turnspeed = 0.05;
-const float straighteningspeed = 1000;
+const float turnspeed = 0.13;
+const float straighteningspeed = 100;
 
 float heading = 0;  
-const float headingchange = 0.05f;
+const float headingchange = 0.01f;
 
 float whitethreshold = 0.3;
-float whiteoutspeed = 4;
+float whiteoutspeed = 2.2; //AAAspeed
 
 int blackseeingquantity = 0;
 int blackquantitythreshold = 5;
@@ -17,8 +17,8 @@ int panickingthreshold = 15;
 
 struct motorspeeds MovementLogic(struct lightSensorReadings inputs) {
 
-  Serial.print("Heading: ");
-  Serial.println(heading);
+  //Serial.print("Heading: ");
+  //Serial.println(heading);
   if (ShouldTurnAround(inputs)) {
     return EXECUTE_TURNAROUND;
   }
