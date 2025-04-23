@@ -3,16 +3,20 @@ float rightError = 0;
 float stop = 0;
 float stopTH = 3;
 float BTH = 0.5;
-float multiplier = 0.4;
+float multiplier = 0.6;
 
-float constant = 2;
-float correction = 1;
-float aggressiveCorrection = 2.5;
+float constant = 3;
+float correction = 2;
+float aggressiveCorrection = 4;
 
-struct motorspeeds mujalMovement(struct lightSensorReadings inputs)
+struct motorspeeds mujalMovement(struct lightSensorReadings inputs, bool collisionBool)
 {
   struct motorspeeds newMotorSpeeds = {0,0};
  
+  if (collisionBool) {
+    return EXECUTE_TURNAROUND;
+  }
+
   //All three are sensors are black
   if (inputs.left >= BTH && inputs.center >= BTH && inputs.right >= BTH)
   {

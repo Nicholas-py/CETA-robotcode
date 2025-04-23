@@ -40,7 +40,7 @@ void setup() {
     CalibrateLightSensors();
     state = FOLLOWING;
   }
-  
+ InitalizeConnection();
 
 }
 
@@ -53,21 +53,22 @@ void loop() {
   else if (state == STOPPED) {
     SetMotors({0,0});
   }
-  
-  
-  delay(5);
+  sequenceConnect();
+ 
+  //delay(5);
 }
 
 void OnStateFollowing() {
   struct lightSensorReadings inputs = GetCalibratedSensorInputs();
-  struct motorspeeds newMotorSpeeds = MovementLogic(inputs);
+  bool collisionBool = GetUltrasonicInput();
+  struct motorspeeds newMotorSpeeds = MovementLogic(inputs); //mujalMovement(inputs, collisionBool)
 
   if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
     if (turnaroundcount < 1 || !stopAfterTwo){
     SwitchState(TURNING);
     TurnAround();
     turnaroundcount++;}
-    
+   
     else {
       state = STOPPED;
       SetMotors({0,0});
