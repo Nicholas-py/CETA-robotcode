@@ -60,6 +60,7 @@ void InitalizeConnection() {
   mqttClient.subscribe(_Commands);
   mqttClient.subscribe(_Start);
 
+  sequenceConnect();
 }
 
 //Don't use
@@ -90,30 +91,38 @@ void sendSensors(float LS, float CS, float RS) {
 
 void sequenceConnect() {
   // avoids being disconnected by the broker
-  mqttClient.poll();
+  while (true)
+  {
+    //Serial.println(".");
+    mqttClient.poll();
 
-  unsigned long currentMillis = millis();
-  
-  //Don't overthrotal
-  //if (currentMillis - previousMillis >= interval) {
-  //  previousMillis = currentMillis;
+    //unsigned long currentMillis = millis();
+    
+    //Don't overthrotal
+    //if (currentMillis - previousMillis >= interval) {
+    //  previousMillis = currentMillis;
 
-  //  Serial.print("Sending message");
-    //sendMotors(count, count);
-    //sendSensors(count, count, count);
+    //  Serial.print("Sending message");
+      //sendMotors(count, count);
+      //sendSensors(count, count, count);
 
-  //  Serial.println();
+    //  Serial.println();
 
-  //  count++;
-  //}
+    //  count++;
+    //}
 
-  int messageSize = mqttClient.parseMessage();
-  if (messageSize) {
-    // we received a message, print out the topic and contents
-    Serial.print("Received a message with topic '");
-    Serial.print(mqttClient.messageTopic());
-    Serial.print("', length ");
-    Serial.print(messageSize);
-    Serial.println(" bytes:");
+    int messageSize = mqttClient.parseMessage();
+    if (messageSize) {
+      // we received a message, print out the topic and contents
+      Serial.print("Received a message with topic '");
+      Serial.print(mqttClient.messageTopic());
+      Serial.print("', length ");
+      Serial.print(messageSize);
+      Serial.println(" bytes:");
+      mqttClient.beginMessage(_Commands);
+      mqttClient.print("ON!");
+      mqttClient.endMessage();
+      return;
+    }
   }
 }

@@ -1,5 +1,5 @@
 #include <Servo.h>
-
+#include "config.h"
 
 struct lightSensorReadings {
   float left;
@@ -22,40 +22,47 @@ enum State {
 enum State state = FOLLOWING;
 
 struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeholder, this is an error code
-int turnaroundcount = 0;
 
-bool needsToCalibrate = false;
-bool stopAfterTwo = false;
+int turnAroundCount = 0;
 
 void setup() {
 
+  //Say that the robot has started
   Serial.begin(9600);
   delay(1000);
   Serial.println("Start");
   delay(1000);
 
+  //Connects wheels to pins so we may comunicate with them
   MotorSetup();
-  if (needsToCalibrate) {
+
+  //So we don't have to calabrate light sensors every time durring testing
+  if (_ShouldCalibrate) {
     state = CALIBRATING;
     CalibrateLightSensors();
     state = FOLLOWING;
   }
- InitalizeConnection();
 
+  //Connects robot to adafruit to accomplish task #2
+  if (_shouldConnectHQTTC == true)
+  {
+    InitalizeConnection();
+  }
 }
 
 
 
 void loop() {
+  
+  //Why?
   if (state == FOLLOWING) {
     OnStateFollowing();
   }
+  //Stops the motors
   else if (state == STOPPED) {
     SetMotors({0,0});
   }
-  sequenceConnect();
- 
-  //delay(5);
+  delay(5);
 }
 
 void OnStateFollowing() {
@@ -64,10 +71,10 @@ void OnStateFollowing() {
   struct motorspeeds newMotorSpeeds = MovementLogic(inputs); //mujalMovement(inputs, collisionBool)
 
   if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
-    if (turnaroundcount < 1 || !stopAfterTwo){
+    if (turnAroundCount < 1 || _StopAfterTwoTurns == false){
     SwitchState(TURNING);
     TurnAround();
-    turnaroundcount++;}
+    turnAroundCount++;}
    
     else {
       state = STOPPED;
@@ -78,6 +85,7 @@ void OnStateFollowing() {
 
 }
 
+//Changes the state to the probivded new state
 void SwitchState(enum State newstate) {
   state = newstate;
 }
