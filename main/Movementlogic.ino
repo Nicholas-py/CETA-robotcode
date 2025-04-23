@@ -1,5 +1,5 @@
 const float defaultspeed = 1.6;
-const float turnspeed = 0.13;
+const float turnspeed = 0.16;
 const float straighteningspeed = 100;
 
 float heading = 0;  
@@ -10,7 +10,7 @@ float whiteoutspeed = 2.2; //AAAspeed
 
 int blackseeingquantity = 0;
 int blackquantitythreshold = 5;
-float blackthreshold = 0.8;
+float blackthreshold = 0.6;
 
 int panickingquantity = 0;
 int panickingthreshold = 15;

@@ -25,7 +25,7 @@ struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeho
 int turnaroundcount = 0;
 
 bool needsToCalibrate = false;
-bool stopAfterTwo = true;
+bool stopAfterTwo = false;
 
 void setup() {
 
