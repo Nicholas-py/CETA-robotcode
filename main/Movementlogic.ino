@@ -100,7 +100,7 @@ struct motorspeeds OnWhiteout(float heading) {
 
 
 float OnPathStraight(float heading) {
-  Serial.println("Straight");
+  //Serial.println("Straight");
   int direction = sgn(heading);
 
   if (abs(straighteningspeed) < abs(heading)){
@@ -111,7 +111,7 @@ float OnPathStraight(float heading) {
 }
 
 float OnDrifting(float heading, bool toleft, bool strong) {
-  Serial.println("Drifting");
+  //Serial.println("Drifting");
   int direction = 2*int(toleft)-1;
   if (sgn(heading) == direction ) {
     return -direction * 0.01;

@@ -40,6 +40,8 @@ void setup() {
     CalibrateLightSensors();
     state = FOLLOWING;
   }
+
+  InitalizeConnection();
   
 
 }
@@ -53,9 +55,9 @@ void loop() {
   else if (state == STOPPED) {
     SetMotors({0,0});
   }
+  sequenceConnect();
   
-  
-  delay(5);
+  //delay(5);
 }
 
 void OnStateFollowing() {
