@@ -59,7 +59,7 @@ void InitalizeConnection() {
   //mqttClient.subscribe(_Commands);
   mqttClient.subscribe(_Start);
 
-  delay(250)
+  delay(250);
 
   mqttClient.beginMessage(_Commands);
   mqttClient.print("(C) Connected To Client");

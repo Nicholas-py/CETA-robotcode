@@ -1,4 +1,3 @@
-#include <Servo.h>
 #include "config.h"
 
 struct motorspeeds {
@@ -19,7 +18,9 @@ enum State {
   CALIBRATING
 };
 
-struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeholder, this is an error code
+float turnaroundcode = 2398424;
+struct motorspeeds SLOW_TURNAROUND = {94096584.0,turnaroundcode}; //Values are placeholder, this is an error code
+struct motorspeeds FAST_TURNAROUND = {82364983.0,turnaroundcode}; //Values are placeholder, this is an error code
 
 enum State state = FOLLOWING;
 

@@ -1,16 +1,25 @@
 int turnAroundCount = 0;
 
+void PickTurnAround(struct motorspeeds code) {
+  if (code.left == SLOW_TURNAROUND.left) {
+    SlowTurnAround();
+  }
+  else if (code.left == FAST_TURNAROUND.left) {
+    FastTurnAround();
+  }
+}
+
 
 void OnLineFollowing() {
   struct lightSensorReadings inputs = GetCalibratedSensorInputs();
   bool collisionBool = GetUltrasonicInput();
-  struct motorspeeds newMotorSpeeds = munjalMovement(inputs, collisionBool);
+  struct motorspeeds newMotorSpeeds = MovementLogic(inputs, collisionBool);
 
-  if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
+  if (newMotorSpeeds.right == turnaroundcode){
     if (turnAroundCount < 3 || !_StopAfterFourTurns){
-    ChangeState(TURNING);
-    TurnAround();
-    turnAroundCount++;}
+      changeState(TURNING);
+      PickTurnAround(newMotorSpeeds);
+      turnAroundCount++;}
    
     else {
       state = STOPPED;
