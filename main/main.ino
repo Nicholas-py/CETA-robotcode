@@ -19,7 +19,7 @@ enum State {
   CALIBRATING
 };
 
-
+struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeholder, this is an error code
 
 enum State state = FOLLOWING;
 
