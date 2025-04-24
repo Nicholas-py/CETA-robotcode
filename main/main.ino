@@ -59,7 +59,6 @@ void loop() {
   else if (state == STOPPED) {
     SetMotors({0,0});
   }
-  // delay(5);
 }
 
 

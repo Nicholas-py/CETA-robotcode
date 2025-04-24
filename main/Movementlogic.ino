@@ -3,13 +3,13 @@ const float turnspeed = 0.16;
 const float straighteningspeed = 100;
 
 float heading = 0;  
-const float headingchange = 0.01f;
+const float headingchange = 0.16f;
 
 float whitethreshold = 0.3;
 float whiteoutspeed = 2.2; //AAAspeed
 
 int blackseeingquantity = 0;
-int blackquantitythreshold = 5;
+int blackquantitythreshold = 15;
 float blackthreshold = 0.6;
 
 int panickingquantity = 0;
@@ -25,7 +25,7 @@ struct motorspeeds MovementLogic(struct lightSensorReadings inputs, bool collisi
     return SLOW_TURNAROUND;
   }
 
-  if (SensorsDetectAllWhite(inputs)) {
+  else if (SensorsDetectAllWhite(inputs)) {
     return OnWhiteout(heading); 
   } 
   else if (Panicking()) {
@@ -80,7 +80,13 @@ bool SensorsDetectAllWhite(struct lightSensorReadings inputs) {
 }
 
 bool SensorsDetectStraight(struct lightSensorReadings inputs) {
-  return  inputs.center > inputs.right + inputs.left || abs(inputs.right-inputs.left) < whitethreshold && inputs.center > whitethreshold;
+  if (inputs.center > inputs.right+inputs.left) {
+    return true;
+  }
+  if (inputs.right - inputs.left < 0.2 && inputs.center > whitethreshold){
+    return true;
+  }
+  return false;
 }
 
 bool Panicking() {
@@ -103,7 +109,7 @@ struct motorspeeds OnWhiteout(float heading) {
 
 
 float OnPathStraight(float heading) {
-  //Serial.println("Straight");
+  Serial.println("Straight");
   int direction = sgn(heading);
 
   if (abs(straighteningspeed) < abs(heading)){
@@ -114,7 +120,7 @@ float OnPathStraight(float heading) {
 }
 
 float OnDrifting(float heading, bool toleft, bool strong) {
-  //Serial.println("Drifting");
+  Serial.println("Drifting");
   int direction = 2*int(toleft)-1;
   if (sgn(heading) == direction ) {
     return -direction * 0.01;
