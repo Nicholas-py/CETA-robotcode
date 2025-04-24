@@ -17,11 +17,14 @@ int panickingthreshold = 15;
 
 struct motorspeeds MovementLogic(struct lightSensorReadings inputs, bool collisionBool) {
 
-  //Serial.print("Heading: ");
-  //Serial.println(heading);
-  if (ShouldTurnAround(inputs) || collisionBool) {
-    return EXECUTE_TURNAROUND;
+  if (collisionBool) {
+    return FAST_TURNAROUND;
   }
+
+  if (ShouldTurnAround(inputs)) {
+    return SLOW_TURNAROUND;
+  }
+
   if (SensorsDetectAllWhite(inputs)) {
     return OnWhiteout(heading); 
   } 

@@ -1,8 +1,7 @@
+#include <Servo.h>
+
 struct motorspeeds stopSpeeds = {90,90};
 float speedAdjustmentFactor[2] = {-21,-20}; 
-
-
-
 
 Servo rServo;
 Servo lServo;
@@ -20,7 +19,7 @@ void SetMotors(struct motorspeeds newMotorSpeeds)
 }
 
 
-void TurnAround() {
+void SlowTurnAround() {
   SetMotors({1,1});
   delay(1400); //How long to go straight
   SetMotors({0,0});
@@ -33,6 +32,18 @@ void TurnAround() {
   SetMotors({0,0});
   delay(300);
   changeState(FOLLOWING);
+}
+
+void FastTurnAround() {
+  delay(300);
+    delay(600);
+  while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
+    delay(10);
+  }
+  SetMotors({0,0});
+  delay(300);
+  changeState(FOLLOWING);
+
 }
 
 void PrintMotorSpeeds(struct motorspeeds toprint) {

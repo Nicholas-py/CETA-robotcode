@@ -14,7 +14,7 @@ struct motorspeeds munjalMovement(struct lightSensorReadings inputs, bool collis
   struct motorspeeds newMotorSpeeds = {0,0};
  
   if (collisionBool) {
-    return EXECUTE_TURNAROUND;
+    return FAST_TURNAROUND;
   }
 
   //All three are sensors are black
@@ -62,7 +62,7 @@ struct motorspeeds munjalMovement(struct lightSensorReadings inputs, bool collis
 
   //Decide what to return
   if (stop >= stopTH) {
-    return EXECUTE_TURNAROUND;
+    return SLOW_TURNAROUND;
   }
   else {
     newMotorSpeeds = {constant+multiplier*leftError, constant+multiplier*rightError}; //Run the robot as normal
