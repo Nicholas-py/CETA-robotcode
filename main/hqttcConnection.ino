@@ -20,6 +20,7 @@ unsigned long previousMillis = 0;
 float count = 0.0;
 
 void InitalizeConnection() {
+  
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
   while (!Serial) {
@@ -48,6 +49,7 @@ void InitalizeConnection() {
   Serial.print("Attempting to connect to the MQTT broker: ");
   Serial.println(broker);
 
+  //waits untill it is connected to broker
   while (!mqttClient.connect(broker, port)) {
     Serial.print(".");
     delay(100);
@@ -65,12 +67,11 @@ void InitalizeConnection() {
   mqttClient.print("(C) Connected To Client");
   mqttClient.endMessage();
 
-  waitForOn();
+  waitForOnFromServer();
 
-  //string S = "Robot is connected!";
 }
 
-void waitForOn() {
+void waitForOnFromServer() {
   // avoids being disconnected by the broker
   while (true)
   {
