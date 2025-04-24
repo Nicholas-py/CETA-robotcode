@@ -15,7 +15,7 @@ MqttClient mqttClient(wifiClient);
 const char broker[] = "io.adafruit.com";
 int        port     = 1883;
 
-const long interval = 15000;
+const long interval = 3000;
 unsigned long previousMillis = 0;
 
 float count = 0.0;
@@ -57,83 +57,44 @@ void InitalizeConnection() {
   Serial.println("You're connected to the MQTT broker!");
   Serial.println();
 
-  mqttClient.subscribe(_Commands);
+  //mqttClient.subscribe(_Commands);
   mqttClient.subscribe(_Start);
 
-  SendMessage();
+  delay(250)
 
-  sequenceConnect();
+  mqttClient.beginMessage(_Commands);
+  mqttClient.print("(C) Connected To Client");
+  mqttClient.endMessage();
+
+  waitForOn();
 
   //string S = "Robot is connected!";
 }
 
-void SendMessage()
-{
-  mqttClient.beginMessage(_Commands);
-  mqttClient.print(0);
-  mqttClient.endMessage();
-
-  return;
-}
-
-//Don't use
-void sendMotors(float LM, float RM) {
-  mqttClient.beginMessage(_LMotor);
-  mqttClient.print(LM);
-  mqttClient.endMessage();
-
-  mqttClient.beginMessage(_RMotor);
-  mqttClient.print(RM);
-  mqttClient.endMessage();
-}
-
-//Don't use
-void sendSensors(float LS, float CS, float RS) {
-  mqttClient.beginMessage(_LSensor);
-  mqttClient.print(LS);
-  mqttClient.endMessage();
-
-  mqttClient.beginMessage(_CSensor);
-  mqttClient.print(CS);
-  mqttClient.endMessage();
-
-  mqttClient.beginMessage(_RSensor);
-  mqttClient.print(RS);
-  mqttClient.endMessage();
-}
-
-void sequenceConnect() {
+void waitForOn() {
   // avoids being disconnected by the broker
   while (true)
   {
-    //Serial.println(".");
     mqttClient.poll();
 
-    //unsigned long currentMillis = millis();
+    unsigned long currentMillis = millis();
     
     //Don't overthrotal
-    //if (currentMillis - previousMillis >= interval) {
-    //  previousMillis = currentMillis;
+    if (currentMillis - previousMillis >= interval) {
+      previousMillis = currentMillis;
 
-    //  Serial.print("Sending message");
-      //sendMotors(count, count);
-      //sendSensors(count, count, count);
-
-    //  Serial.println();
-
-    //  count++;
-    //}
+      mqttClient.beginMessage(_Commands);
+      mqttClient.print("(W) Waiting for message to start");
+      mqttClient.endMessage();
+    }
 
     int messageSize = mqttClient.parseMessage();
-    if (messageSize) {
-      // we received a message, print out the topic and contents
-      Serial.print("Received a message with topic '");
-      Serial.print(mqttClient.messageTopic());
-      Serial.print("', length ");
-      Serial.print(messageSize);
-      Serial.println(" bytes:");
+
+    //Amount of bytes that the "ON" Message is
+    if (messageSize == 2) {
+      Serial.print("Starting Robot");
       mqttClient.beginMessage(_Commands);
-      mqttClient.print("ON!");
+      mqttClient.print("(S) Starting Robot");
       mqttClient.endMessage();
       return;
     }
