@@ -13,6 +13,6 @@
 #define _Username "ChessPlayer"
 
 //Settings for debugging
-#define _ShouldCalibrate false;
-#define _StopAfterTwoTurns false;
-#define _shouldConnectHQTTC true;
+bool _ShouldCalibrate = false;
+bool _StopAfterTwoTurns = false;
+bool _shouldConnectHQTTC = true;

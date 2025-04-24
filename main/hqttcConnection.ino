@@ -2,7 +2,7 @@
 #include <ArduinoMqttClient.h>
 
 #include "secrets.h"
-#include "config.h"
+//#include "config.h"
 
 //Grabs data from secrets.h
 char ssid[] = _SSID;
@@ -60,7 +60,20 @@ void InitalizeConnection() {
   mqttClient.subscribe(_Commands);
   mqttClient.subscribe(_Start);
 
+  SendMessage();
+
   sequenceConnect();
+
+  //string S = "Robot is connected!";
+}
+
+void SendMessage()
+{
+  mqttClient.beginMessage(_Commands);
+  mqttClient.print(0);
+  mqttClient.endMessage();
+
+  return;
 }
 
 //Don't use

@@ -37,14 +37,14 @@ void setup() {
   MotorSetup();
 
   //So we don't have to calabrate light sensors every time durring testing
-  if (_ShouldCalibrate) {
+  if (_ShouldCalibrate == true) {
     state = CALIBRATING;
     CalibrateLightSensors();
     state = FOLLOWING;
   }
 
   //Connects robot to adafruit to accomplish task #2
-  if (_shouldConnectHQTTC == true)
+  if (_shouldConnectHQTTC)
   {
     InitalizeConnection();
   }
@@ -62,16 +62,16 @@ void loop() {
   else if (state == STOPPED) {
     SetMotors({0,0});
   }
-  delay(5);
+  // delay(5);
 }
 
 void OnStateFollowing() {
   struct lightSensorReadings inputs = GetCalibratedSensorInputs();
   bool collisionBool = GetUltrasonicInput();
-  struct motorspeeds newMotorSpeeds = MovementLogic(inputs); //mujalMovement(inputs, collisionBool)
+  struct motorspeeds newMotorSpeeds = munjalMovement(inputs, collisionBool);
 
   if (newMotorSpeeds.left == EXECUTE_TURNAROUND.left){
-    if (turnAroundCount < 1 || _StopAfterTwoTurns == false){
+    if (turnAroundCount < 1 || !_StopAfterTwoTurns){
     SwitchState(TURNING);
     TurnAround();
     turnAroundCount++;}

@@ -9,7 +9,7 @@ float constant = 3;
 float correction = 2;
 float aggressiveCorrection = 4;
 
-struct motorspeeds mujalMovement(struct lightSensorReadings inputs, bool collisionBool)
+struct motorspeeds munjalMovement(struct lightSensorReadings inputs, bool collisionBool)
 {
   struct motorspeeds newMotorSpeeds = {0,0};
  

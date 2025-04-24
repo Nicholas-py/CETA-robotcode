@@ -21,25 +21,31 @@ UltraSonicDistanceSensor distanceSensor(triggerPin, echoPin);
 bool GetUltrasonicInput() {
  
   //Update collision distance measurement at a defined interval
-  collisionDistanceCurrentSampleTime = millis();
+  // collisionDistanceCurrentSampleTime = millis();
  
-  if ((collisionDistanceCurrentSampleTime - collisionDistancePreviousSampleTime) >= collisionDistanceSampleInterval) {
-    collisionDistancePreviousSampleTime = collisionDistanceCurrentSampleTime;
+  // if ((collisionDistanceCurrentSampleTime - collisionDistancePreviousSampleTime) >= collisionDistanceSampleInterval) {
+  //   collisionDistancePreviousSampleTime = collisionDistanceCurrentSampleTime;
    
-    //Make a distance measurement
-    collisionDistance = distanceSensor.measureDistanceCm();
-    Serial.println(collisionDistance);
+  //   //Make a distance measurement
+  //   collisionDistance = distanceSensor.measureDistanceCm();
+  //   Serial.println(collisionDistance);
    
-    if (collisionDistance >= collisionDetectThreshold && collisionDistance > 0) {
-        return true; //Executes turnaround if there is an obstacle within the threshold
-    }
+  //   if (collisionDistance <= collisionDetectThreshold && collisionDistance > 0) {
+  //       return true; //Executes turnaround if there is an obstacle within the threshold
+  //   }
    
-    else {
-        return false;
-    }
+  collisionDistance = distanceSensor.measureDistanceCm();
+  Serial.println(collisionDistance);
+   
+  if (collisionDistance <= collisionDetectThreshold && collisionDistance > 0) {
+      return true; //Executes turnaround if there is an obstacle within the threshold
   }
- 
-  else { //Returns false if the input interval has not yet elapsed
+  else {
       return false;
   }
+  // }
+ 
+  // else { //Returns false if the input interval has not yet elapsed
+  //     return false;
+  // }
 }
