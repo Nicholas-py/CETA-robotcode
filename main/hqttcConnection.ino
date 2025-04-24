@@ -2,7 +2,6 @@
 #include <ArduinoMqttClient.h>
 
 #include "secrets.h"
-//#include "config.h"
 
 //Grabs data from secrets.h
 char ssid[] = _SSID;

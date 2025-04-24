@@ -14,5 +14,5 @@
 
 //Settings for debugging
 bool _ShouldCalibrate = false;
-bool _StopAfterTwoTurns = false;
+bool _StopAfterFourTurns = false;
 bool _shouldConnectHQTTC = true;

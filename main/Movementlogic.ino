@@ -15,11 +15,11 @@ float blackthreshold = 0.6;
 int panickingquantity = 0;
 int panickingthreshold = 15;
 
-struct motorspeeds MovementLogic(struct lightSensorReadings inputs) {
+struct motorspeeds MovementLogic(struct lightSensorReadings inputs, bool collisionBool) {
 
   //Serial.print("Heading: ");
   //Serial.println(heading);
-  if (ShouldTurnAround(inputs)) {
+  if (ShouldTurnAround(inputs) || collisionBool) {
     return EXECUTE_TURNAROUND;
   }
   if (SensorsDetectAllWhite(inputs)) {

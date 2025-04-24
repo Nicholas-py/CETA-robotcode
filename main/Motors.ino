@@ -1,6 +1,9 @@
 struct motorspeeds stopSpeeds = {90,90};
 float speedAdjustmentFactor[2] = {-21,-20}; 
 
+struct motorspeeds EXECUTE_TURNAROUND = {94096584,2398424}; //Values are placeholder, this is an error code
+
+
 
 Servo rServo;
 Servo lServo;
@@ -30,7 +33,7 @@ void TurnAround() {
   }
   SetMotors({0,0});
   delay(300);
-  SwitchState(FOLLOWING);
+  changeState(FOLLOWING);
 }
 
 void PrintMotorSpeeds(struct motorspeeds toprint) {
