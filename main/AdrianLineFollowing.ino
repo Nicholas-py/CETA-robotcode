@@ -2,7 +2,7 @@
 
 float blackThreshhold = 0.5;
 
-struct wheelSpeeds safeLineFollowing(struct lightSensorReadings inputs)
+struct wheelSpeeds AdrianLineFollowing(struct lightSensorReadings inputs)
 {
   struct wheelSpeeds newMotorSpeeds = {0,0};
   if (inputs.left <= blackThreshhold && inputs.center > blackThreshhold && inputs.right <= blackThreshhold)

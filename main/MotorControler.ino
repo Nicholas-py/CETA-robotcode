@@ -1,6 +1,9 @@
 #include <Servo.h>
 
+//When the motors are at this speed, they will not be moving
 struct wheelSpeeds stopSpeeds = {90,90};
+
+//constant to multiply the speed by
 float speedAdjustmentFactor[2] = {-21,-20}; 
 
 Servo rServo;
@@ -15,7 +18,6 @@ void SetWheelServoSpeed(struct wheelSpeeds newMotorSpeeds)
 {
   lServo.write(newMotorSpeeds.left  * speedAdjustmentFactor[0] + stopSpeeds.left);
   rServo.write(newMotorSpeeds.right * speedAdjustmentFactor[1] + stopSpeeds.right);
-  //PrintMotorSpeeds(newMotorSpeeds);
 }
 
 

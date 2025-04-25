@@ -9,7 +9,7 @@ float constant = 3;
 float correction = 2;
 float aggressiveCorrection = 4;
 
-struct wheelSpeeds SemiAgreasiveLineFollowing(struct lightSensorReadings inputs)
+struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
 {
   struct wheelSpeeds newMotorSpeeds = {0,0};
 
