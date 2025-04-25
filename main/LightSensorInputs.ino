@@ -29,6 +29,7 @@ struct unadjustedLightSensorReadings GetRawSensorInput() {
 
 
 void PrintReadings(struct unadjustedLightSensorReadings thingy) {
+  Serial.print("Light Sensor Readings (1): ");
   Serial.print("(");
   Serial.print(thingy.left);
   Serial.print(", ");
@@ -38,6 +39,7 @@ void PrintReadings(struct unadjustedLightSensorReadings thingy) {
   Serial.println(")");
 }
 void PrintReadings2(struct lightSensorReadings thingy) {
+  Serial.print("Light Sensor Readings (2): ");
   Serial.print("(");
   Serial.print(thingy.left);
   Serial.print(", ");
@@ -79,8 +81,8 @@ bool CalibrateLightSensors()
   while (CalibrationState < 2)
   {
     float CalibrationButton = digitalRead(CalButton);
-    Serial.print("Calibrate White: ");
-    Serial.println(CalibrationState);
+    //Serial.print("Calibrate White: ");
+    //Serial.println(CalibrationState);
 
     //Calibrattes the white color when the button is pressed and it has not Calibrated yet
     if (CalibrationButton == 0 && CalibrationState == 0){

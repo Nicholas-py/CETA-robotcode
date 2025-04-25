@@ -9,13 +9,9 @@ float constant = 3;
 float correction = 2;
 float aggressiveCorrection = 4;
 
-struct motorspeeds munjalMovement(struct lightSensorReadings inputs, bool collisionBool)
+struct wheelSpeeds SemiAgreasiveLineFollowing(struct lightSensorReadings inputs)
 {
-  struct motorspeeds newMotorSpeeds = {0,0};
- 
-  if (collisionBool) {
-    return FAST_TURNAROUND;
-  }
+  struct wheelSpeeds newMotorSpeeds = {0,0};
 
   //All three are sensors are black
   if (inputs.left >= BTH && inputs.center >= BTH && inputs.right >= BTH)

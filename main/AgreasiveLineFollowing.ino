@@ -15,11 +15,7 @@ float blackthreshold = 0.6;
 int panickingquantity = 0;
 int panickingthreshold = 15;
 
-struct motorspeeds MovementLogic(struct lightSensorReadings inputs, bool collisionBool) {
-
-  if (collisionBool) {
-    return FAST_TURNAROUND;
-  }
+struct wheelSpeeds AgreasiveLineFollowing(struct lightSensorReadings inputs) {
 
   if (ShouldTurnAround(inputs)) {
     return SLOW_TURNAROUND;
@@ -44,7 +40,7 @@ struct motorspeeds MovementLogic(struct lightSensorReadings inputs, bool collisi
     heading = OnDrifting(heading, inputs.right < inputs.left, inputs.center < 0.5);
   }
   
-  struct motorspeeds toreturn = { defaultspeed + turnspeed * heading, defaultspeed - turnspeed * heading };
+  struct wheelSpeeds toreturn = { defaultspeed + turnspeed * heading, defaultspeed - turnspeed * heading };
   return toreturn;
 }
 
@@ -94,22 +90,22 @@ bool Panicking() {
 }
 
 
-struct motorspeeds OnWhiteout(float heading) {
-  Serial.println("WHITEOUT");
+struct wheelSpeeds OnWhiteout(float heading) {
+  Serial.println("Robot is fully on white");
   panickingquantity += 1;
 
   if (heading < 0) {
-    struct motorspeeds uhoh = {defaultspeed - whiteoutspeed, defaultspeed +whiteoutspeed};
+    struct wheelSpeeds uhoh = {defaultspeed - whiteoutspeed, defaultspeed +whiteoutspeed};
     return uhoh;
   } else {
-    struct motorspeeds uhoh = {defaultspeed + whiteoutspeed, defaultspeed -whiteoutspeed};
+    struct wheelSpeeds uhoh = {defaultspeed + whiteoutspeed, defaultspeed -whiteoutspeed};
     return uhoh;
   }
 }
 
 
 float OnPathStraight(float heading) {
-  Serial.println("Straight");
+  Serial.println("Heading: streight");
   int direction = sgn(heading);
 
   if (abs(straighteningspeed) < abs(heading)){
@@ -120,7 +116,7 @@ float OnPathStraight(float heading) {
 }
 
 float OnDrifting(float heading, bool toleft, bool strong) {
-  Serial.println("Drifting");
+  Serial.println("Heading: Drifting");
   int direction = 2*int(toleft)-1;
   if (sgn(heading) == direction ) {
     return -direction * 0.01;

@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-struct motorspeeds stopSpeeds = {90,90};
+struct wheelSpeeds stopSpeeds = {90,90};
 float speedAdjustmentFactor[2] = {-21,-20}; 
 
 Servo rServo;
@@ -11,7 +11,7 @@ void MotorSetup() {
   lServo.attach(5);
 }
 
-void SetMotors(struct motorspeeds newMotorSpeeds) 
+void SetWheelServoSpeed(struct wheelSpeeds newMotorSpeeds) 
 {
   lServo.write(newMotorSpeeds.left  * speedAdjustmentFactor[0] + stopSpeeds.left);
   rServo.write(newMotorSpeeds.right * speedAdjustmentFactor[1] + stopSpeeds.right);
@@ -20,34 +20,34 @@ void SetMotors(struct motorspeeds newMotorSpeeds)
 
 
 void SlowTurnAround() {
-  SetMotors({1,1});
+  SetWheelServoSpeed({1,1});
   delay(1400); //How long to go straight
-  SetMotors({0,0});
+  SetWheelServoSpeed({0,0});
   delay(300);
-  SetMotors({-1,1});
+  SetWheelServoSpeed({-1,1});
   delay(600);
   while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
     delay(10);
   }
-  SetMotors({0,0});
+  SetWheelServoSpeed({0,0});
   delay(300);
-  changeState(FOLLOWING);
+  setNewRobotMovementState(FOLLOWING);
 }
 
 void FastTurnAround() {
   delay(300);
-    delay(600);
+  delay(600);
   while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
     delay(10);
   }
-  SetMotors({0,0});
+  SetWheelServoSpeed({0,0});
   delay(300);
-  changeState(FOLLOWING);
+  setNewRobotMovementState(FOLLOWING);
 
 }
 
-void PrintMotorSpeeds(struct motorspeeds toprint) {
-      Serial.print("Speeds: Left: ");
+void PrintMotorSpeeds(struct wheelSpeeds toprint) {
+    Serial.print("Speeds: Left: ");
     Serial.print(toprint.left);
     Serial.print(" Right: ");
     Serial.println(toprint.right);

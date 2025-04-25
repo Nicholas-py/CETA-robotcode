@@ -22,6 +22,7 @@ bool GetUltrasonicInput() {
  
   //Update collision distance measurement at a defined interval
   collisionDistance = distanceSensor.measureDistanceCm();
+  Serial.print("Ultrasonic Sensor Distance: ");
   Serial.println(collisionDistance);
    
   if (collisionDistance <= collisionDetectThreshold && collisionDistance > 0) {

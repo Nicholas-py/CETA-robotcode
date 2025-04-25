@@ -1,6 +1,6 @@
 #include "config.h"
 
-struct motorspeeds {
+struct wheelSpeeds {
   float left;
   float right;
 };
@@ -11,40 +11,45 @@ struct lightSensorReadings {
   float right;
 };
 
-enum State {
+enum RobotMovementStates {
   STOPPED,
   FOLLOWING,
   TURNING,
   CALIBRATING
 };
 
-float turnaroundcode = 2398424;
-struct motorspeeds SLOW_TURNAROUND = {94096584.0,turnaroundcode}; //Values are placeholder, this is an error code
-struct motorspeeds FAST_TURNAROUND = {82364983.0,turnaroundcode}; //Values are placeholder, this is an error code
+// 'Error' code for executing a turn around
+float turnAroundErrorCode = 2398424;
+struct wheelSpeeds SLOW_TURNAROUND = {94096584.0,turnAroundErrorCode};
+struct wheelSpeeds FAST_TURNAROUND = {82364983.0,turnAroundErrorCode};
 
-enum State state = FOLLOWING;
+// Will have the robot start by following the line
+enum RobotMovementStates CurrentRobotMovementState = FOLLOWING;
 
 
 
 void setup() {
+  // Connects robot to the Serial monitor so we can view its output
   Serial.begin(9600);
   delay(1000);
-  Serial.println("Start");
+  Serial.println("Starting Robot");
   delay(1000);
 
   //Connects wheels to pins so we may comunicate with them
   MotorSetup();
 
+  // Allows toggoling on and off weather the robot should be calabrated
   if (_ShouldCalibrate == true) {
-    changeState(CALIBRATING);
+    setNewRobotMovementState(CALIBRATING);
     CalibrateLightSensors();
-    changeState(FOLLOWING);
+    setNewRobotMovementState(FOLLOWING);
   }
 
-  //Connects robot to adafruit to accomplish task #2
-  if (_shouldConnectHQTTC)
+  // Allows toggoling on and off weather the robot should be started by adafruit
+  // Use config.h and secrets.h to configure the HQTTC connection
+  if (_shouldConnectToHQTTC)
   {
-    InitalizeConnection();
+    InitalizeHQTTCConnection();
   }
 }
 
@@ -52,16 +57,15 @@ void setup() {
 
 void loop() {
   
-  if (state == FOLLOWING) {
-    OnLineFollowing();
+  if (CurrentRobotMovementState == FOLLOWING) {
+    WhenLineFollowing();
   }
-
-  else if (state == STOPPED) {
-    SetMotors({0,0});
+  else if (CurrentRobotMovementState == STOPPED) {
+    SetWheelServoSpeed({0,0});
   }
 }
 
 
-void changeState(enum State newstate) {
-  state = newstate;
+void setNewRobotMovementState(enum RobotMovementStates newstate) {
+  CurrentRobotMovementState = newstate;
 }

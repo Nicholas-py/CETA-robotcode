@@ -2,9 +2,9 @@
 
 float blackThreshhold = 0.5;
 
-struct motorspeeds testMovement(struct lightSensorReadings inputs)
+struct wheelSpeeds safeLineFollowing(struct lightSensorReadings inputs)
 {
-  struct motorspeeds newMotorSpeeds = {0,0};
+  struct wheelSpeeds newMotorSpeeds = {0,0};
   if (inputs.left <= blackThreshhold && inputs.center > blackThreshhold && inputs.right <= blackThreshhold)
   {
     newMotorSpeeds = {1, 1};

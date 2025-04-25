@@ -19,7 +19,7 @@ unsigned long previousMillis = 0;
 
 float count = 0.0;
 
-void InitalizeConnection() {
+void InitalizeHQTTCConnection() {
   
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
@@ -37,7 +37,6 @@ void InitalizeConnection() {
   }
 
   Serial.println("You're connected to the network");
-  Serial.println();
 
   // You can provide a unique client ID, if not set the library uses Arduino-millis()
   // Each client must have a unique client ID
