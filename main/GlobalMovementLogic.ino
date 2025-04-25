@@ -1,6 +1,8 @@
 int numberOfTurnarounds = 0;
 
 void PickWhichTurnAround(struct wheelSpeeds code) {
+    pinMode(14, OUTPUT);
+  digitalWrite(14,HIGH);
   if (code.left == SLOW_TURNAROUND.left) {
     SlowTurnAround();
   }
@@ -14,9 +16,9 @@ void WhenLineFollowing() {
 
   struct lightSensorReadings lightSensorInputs = GetCalibratedSensorInputs();
   struct wheelSpeeds newMotorSpeeds;
-  if (_CurrentLineFollowingLogic == AGGRESIVE)
+  if (_CurrentLineFollowingLogic == NICHOLAS)
   {
-    newMotorSpeeds = AgreasiveLineFollowing(lightSensorInputs);
+    newMotorSpeeds = NicholasLineFollowing(lightSensorInputs);
   } 
 
   
@@ -39,6 +41,7 @@ void WhenLineFollowing() {
       SetWheelServoSpeed({0,0});
     }
   }
+  else {
   SetWheelServoSpeed(newMotorSpeeds);
-
+  }
 }

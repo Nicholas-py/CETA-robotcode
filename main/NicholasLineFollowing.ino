@@ -1,21 +1,21 @@
 const float defaultspeed = 1.6;
-const float turnspeed = 0.16;
+const float turnspeed = 1;
 const float straighteningspeed = 100;
 
 float heading = 0;  
 const float headingchange = 0.16f;
 
 float whitethreshold = 0.3;
-float whiteoutspeed = 2.2; //AAAspeed
+float whiteoutspeed = 1.8; //AAAspeed
 
 int blackseeingquantity = 0;
-int blackquantitythreshold = 15;
+const int blackquantitythreshold = 2;
 float blackthreshold = 0.6;
 
 int panickingquantity = 0;
 int panickingthreshold = 15;
 
-struct wheelSpeeds AgreasiveLineFollowing(struct lightSensorReadings inputs) {
+struct wheelSpeeds NicholasLineFollowing(struct lightSensorReadings inputs) {
 
   if (ShouldTurnAround(inputs)) {
     return SLOW_TURNAROUND;

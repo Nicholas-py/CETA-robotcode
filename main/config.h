@@ -15,15 +15,15 @@
 //Settings for debugging
 bool _ShouldCalibrate = false;
 bool _StopAfterFourTurns = true;
-bool _shouldConnectToHQTTC = true;
+bool _shouldConnectToHQTTC = false;
 bool _ShouldStopAtWall = true;
 
 //Movement Logic
 // Don't use safe at the moment, it dose not work with turning around
-enum PossableLineFollowingLogics {
-  AGGRESIVE,
-  SEMIAGGRESIVE,
-  SAFE
+enum PossibleLineFollowingLogics {
+  NICHOLAS,
+  MUNJAL,
+  ADRIAN
 };
 
-enum PossableLineFollowingLogics _CurrentLineFollowingLogic = AGGRESIVE;
+enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = NICHOLAS;
