@@ -1,5 +1,6 @@
 int numberOfTurnarounds = 0;
 
+//Chouses 1 of the 2 turn arounds to use based on the inputed wheel speeds
 void PickWhichTurnAround(struct wheelSpeeds code) {
     pinMode(14, OUTPUT);
   digitalWrite(14,HIGH);
@@ -11,18 +12,30 @@ void PickWhichTurnAround(struct wheelSpeeds code) {
   }
 }
 
+//Picks which line following algarithum to use based on the config
+struct wheelSpeeds executeLineFollowing()
+{
+  struct lightSensorReadings lightSensorInputs = GetCalibratedSensorInputs();
+  struct wheelSpeeds newMotorSpeeds;
+
+  //selects which line following code to work
+  if (_CurrentLineFollowingLogic == NICHOLAS)
+    newMotorSpeeds = NicholasLineFollowing(lightSensorInputs);
+
+  else if (_CurrentLineFollowingLogic == ADRIAN)
+    newMotorSpeeds = AdrianLineFollowing(lightSensorInputs);
+
+  else if (_CurrentLineFollowingLogic == MUNJAL)
+    newMotorSpeeds = MunjalLineFollowing(lightSensorInputs);
+
+  return newMotorSpeeds;
+}
 
 void WhenLineFollowing() {
 
-  struct lightSensorReadings lightSensorInputs = GetCalibratedSensorInputs();
-  struct wheelSpeeds newMotorSpeeds;
-  if (_CurrentLineFollowingLogic == NICHOLAS)
-  {
-    newMotorSpeeds = NicholasLineFollowing(lightSensorInputs);
-  } 
+  struct wheelSpeeds newMotorSpeeds = executeLineFollowing();
 
-  
-  if (_ShouldStopAtWall == true && GetUltrasonicInput() == true)
+  if (_ShouldStopAtWall && GetUltrasonicInput())
   {
     newMotorSpeeds = FAST_TURNAROUND;
   }

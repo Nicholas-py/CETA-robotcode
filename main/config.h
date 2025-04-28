@@ -19,11 +19,5 @@ bool _shouldConnectToHQTTC = false;
 bool _ShouldStopAtWall = true;
 
 //Movement Logic
-// Don't use safe at the moment, it dose not work with turning around
-enum PossibleLineFollowingLogics {
-  NICHOLAS,
-  MUNJAL,
-  ADRIAN
-};
-
+enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN};
 enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = NICHOLAS;
