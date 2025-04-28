@@ -1,4 +1,4 @@
-//Ada fruit configs
+//Adafruit configs
 #define _LMotor "ChessPlayer/feeds/cetaiotrobot31415.lmotor"
 #define _RMotor "ChessPlayer/feeds/cetaiotrobot31415.rmotor"
 
@@ -16,8 +16,8 @@
 bool _ShouldCalibrate = true;
 bool _StopAfterFourTurns = true;
 bool _shouldConnectToHQTTC = false;
-bool _ShouldStopAtWall = true;
+bool _ShouldStopAtWall = false;
 
 //Movement Logic
 enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN};
-enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = NICHOLAS;
+enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = ADRIAN;
