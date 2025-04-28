@@ -5,8 +5,8 @@ const float straighteningspeed = 100;
 float heading = 0;  
 const float headingchange = 0.16f;
 
-float whitethreshold = 0.3;
-float whiteoutspeed = 1.8; //AAAspeed
+float whitethreshold = 0.5;
+float whiteoutspeed = 1.3; //AAAspeed
 
 int blackseeingquantity = 0;
 const int blackquantitythreshold = 2;
@@ -59,7 +59,7 @@ bool ShouldTurnAround(struct lightSensorReadings inputs) {
 
   if (minimum > blackthreshold) {
     blackseeingquantity++;
-    if (blackseeingquantity > blackquantitythreshold) {
+    if (blackseeingquantity >= blackquantitythreshold) {
       return true;
     }
   }

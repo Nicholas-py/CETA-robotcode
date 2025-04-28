@@ -12,7 +12,7 @@
 #define _ClientID "ea182fe498d648b8a8351534ac82f23b"
 #define _Username "ChessPlayer"
 
-//Settings for how it should run
+//Settings for debugging
 bool _ShouldCalibrate = true;
 bool _StopAfterFourTurns = true;
 bool _shouldConnectToHQTTC = false;
