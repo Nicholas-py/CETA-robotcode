@@ -87,6 +87,7 @@ bool CalibrateLightSensors()
     //Calibrattes the white color when the button is pressed and it has not Calibrated yet
     if (CalibrationButton == 0 && CalibrationState == 0){
       WhiteCalibrationValues = GetRawSensorInput();
+      
 
       //Blinks the red LED
       digitalWrite(14, HIGH);  

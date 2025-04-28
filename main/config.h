@@ -13,7 +13,7 @@
 #define _Username "ChessPlayer"
 
 //Settings for debugging
-bool _ShouldCalibrate = false;
+bool _ShouldCalibrate = true;
 bool _StopAfterFourTurns = true;
 bool _shouldConnectToHQTTC = false;
 bool _ShouldStopAtWall = true;
