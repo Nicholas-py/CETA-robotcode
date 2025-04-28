@@ -32,6 +32,7 @@ void SlowTurnAround() {
     delay(5);
   }
   SetWheelServoSpeed({0,0});
+  SetWheelServoSpeed({-0.75,0.75});
   //delay(300);
   setNewRobotMovementState(FOLLOWING);
 }

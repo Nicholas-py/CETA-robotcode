@@ -78,7 +78,7 @@ bool CalibrateLightSensors()
   int adjustmentValue = 50;
 
   
-  while (CalibrationState < 2)
+  while (CalibrationState < 3)
   {
     float CalibrationButton = digitalRead(CalButton);
     //Serial.print("Calibrate White: ");
@@ -112,6 +112,14 @@ bool CalibrateLightSensors()
       continue;
 
     }
+
+    //starts the robot when the button is pressed and both have been calabrated
+    if (CalibrationButton == 0 && CalibrationState == 3)
+    {
+      CalibrationState = 3;
+      continue;
+    }
+
   }
   PrintReadings(WhiteCalibrationValues);
   PrintReadings(BlackCalibrationValues);
