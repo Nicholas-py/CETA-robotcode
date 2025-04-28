@@ -3,7 +3,7 @@ const float turnspeed = 1;
 const float straighteningspeed = 100;
 
 float heading = 0;  
-const float headingchange = 0.16f;
+const float headingchange = 0.1f;
 
 float whitethreshold = 0.5;
 float whiteoutspeed = 1.3; //AAAspeed
@@ -11,6 +11,9 @@ float whiteoutspeed = 1.3; //AAAspeed
 int blackseeingquantity = 0;
 const int blackquantitythreshold = 2;
 float blackthreshold = 0.6;
+
+int blackwhitequantity = 0
+const int lineskipthreshold = 2;
 
 int panickingquantity = 0;
 int panickingthreshold = 15;
@@ -25,9 +28,12 @@ struct wheelSpeeds NicholasLineFollowing(struct lightSensorReadings inputs) {
     return OnWhiteout(heading); 
   } 
   else if (Panicking()) {
+    blackwhitequantity++;
+    if (blackwhitequantity >= lineskipthreshold) {
+      blackwhitequantity = 0;
     heading = 0;
     panickingquantity = 0;
-    return {0,0};
+    return {0,0};}
   }
 
   else if (SensorsDetectStraight(inputs)) {

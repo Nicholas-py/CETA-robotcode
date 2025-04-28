@@ -50,6 +50,7 @@ void WhenLineFollowing() {
     }
     else 
     {
+      ForwardSlightly();
       CurrentRobotMovementState = STOPPED;
       SetWheelServoSpeed({0,0});
     }

@@ -20,6 +20,10 @@ void SetWheelServoSpeed(struct wheelSpeeds newMotorSpeeds)
   rServo.write(newMotorSpeeds.right * speedAdjustmentFactor[1] + stopSpeeds.right);
 }
 
+void ForwardSlightly() {
+    SetWheelServoSpeed({1,1});
+    delay(400);
+}
 
 void SlowTurnAround() {
   SetWheelServoSpeed({1,1});
