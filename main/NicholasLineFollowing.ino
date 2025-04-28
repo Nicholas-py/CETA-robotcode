@@ -12,7 +12,7 @@ int blackseeingquantity = 0;
 const int blackquantitythreshold = 2;
 float blackthreshold = 0.6;
 
-int blackwhitequantity = 0
+int blackwhitequantity = 0;
 const int lineskipthreshold = 2;
 
 int panickingquantity = 0;
