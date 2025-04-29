@@ -2,7 +2,7 @@
 
 float blackThreshhold = 0.65;
 float fullBlackThreshhold = 0.88;
-float speed = 0.9;
+float speed = 1;
 
 struct wheelSpeeds AdrianLineFollowing(struct lightSensorReadings inputs)
 {

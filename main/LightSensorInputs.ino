@@ -114,9 +114,10 @@ bool CalibrateLightSensors()
     }
 
     //starts the robot when the button is pressed and both have been calabrated
-    if (CalibrationButton == 0 && CalibrationState == 3)
+    if (CalibrationButton == 0 && CalibrationState == 2)
     {
       CalibrationState = 3;
+      ForwardSlightly();
       continue;
     }
 
