@@ -117,14 +117,12 @@ bool CalibrateLightSensors()
     if (CalibrationButton == 0 && CalibrationState == 2)
     {
       CalibrationState = 3;
-      ForwardSlightly();
       continue;
     }
 
   }
   PrintReadings(WhiteCalibrationValues);
   PrintReadings(BlackCalibrationValues);
-  delay(1000);
   return true;
 }
 
