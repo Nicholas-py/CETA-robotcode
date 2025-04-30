@@ -1,0 +1,7 @@
+
+struct wheelSpeeds CamlLineFollowing(struct lightSensorReadings inputs)
+{
+  double diff = (inputs.left - inputs.right);
+  struct wheelSpeeds newMotorSpeeds = {0.5 - diff, 0.5 + diff};
+  return newMotorSpeeds;
+}

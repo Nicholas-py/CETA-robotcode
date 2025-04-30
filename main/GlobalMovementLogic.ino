@@ -10,6 +10,9 @@ void PickWhichTurnAround(struct wheelSpeeds code) {
   else if (code.left == FAST_TURNAROUND.left) {
     FastTurnAround();
   }
+  else if (code.left == SUPPER_TURNAROUND.left) {
+    SupperTurnAround();
+  }
   digitalWrite(14,LOW);
 }
 
