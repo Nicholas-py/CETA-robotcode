@@ -21,22 +21,22 @@ void SetWheelServoSpeed(struct wheelSpeeds newMotorSpeeds)
 }
 
 void ForwardSlightly() {
-    SetWheelServoSpeed({1,1});
-    delay(400);
+    SetWheelServoSpeed({2,2});
+    delay(100);
 }
 
 void SlowTurnAround() {
-  SetWheelServoSpeed({1,1});
-  delay(1000); //How long to go straight
+  SetWheelServoSpeed({2,2});
+  delay(500); //How long to go straight
   SetWheelServoSpeed({0,0});
-  delay(300);
-  SetWheelServoSpeed({-0.75,0.75});
-  delay(500);
+  delay(100);
+  SetWheelServoSpeed({-1,1});
+  delay(350);
   while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
     delay(5);
   }
   SetWheelServoSpeed({0,0});
-  SetWheelServoSpeed({-0.75,0.75});
+  //SetWheelServoSpeed({-0.75,0.75});
   //delay(300);
   setNewRobotMovementState(FOLLOWING);
 }

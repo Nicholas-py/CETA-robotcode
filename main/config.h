@@ -19,5 +19,5 @@ bool _shouldConnectToHQTTC = false;
 bool _ShouldStopAtWall = false;
 
 //Movement Logic
-enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN};
+enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN}; //Adrian: 44s, Munjal: unknown, Nick: 27s
 enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = ADRIAN;

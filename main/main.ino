@@ -29,7 +29,7 @@ enum RobotMovementStates CurrentRobotMovementState = FOLLOWING;
 
 
 void setup() {
-  
+
   // Connects robot to the Serial monitor so we can view its output
   Serial.begin(9600);
   delay(1000);
