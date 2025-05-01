@@ -31,13 +31,13 @@ void SlowTurnAround() {
   SetWheelServoSpeed({0,0});
   delay(100);
   SetWheelServoSpeed({-1,1});
-  delay(400);
+  delay(800);
   while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
     delay(5);
   }
   SetWheelServoSpeed({0,0});
   //SetWheelServoSpeed({-0.75,0.75});
-  //delay(300);
+  delay(300);
   setNewRobotMovementState(FOLLOWING);
 }
 

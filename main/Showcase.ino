@@ -12,14 +12,14 @@ void Showcase() {
   int time = 0;
     while (time < duration) {
       time += 50;
-      struct wheelSpeeds speds = {lwheel(time), rwheel(time)};
+      struct wheelSpeeds speds = {0.5f+lwheel(time), 0.5f+rwheel(time)};
       SetWheelServoSpeed(speds);
       delay(50);
     }
     time = 0;
     while (time > -duration) {
-      time -= 50
-      struct wheelSpeeds speds = {0.5 - lwheel(duration + time),0.5 - rwheel(duration + time)};
+      time -= 50;
+      struct wheelSpeeds speds = {0.5f - lwheel(duration + time),0.5f - rwheel(duration + time)};
       SetWheelServoSpeed(speds);
       delay(50);
     }

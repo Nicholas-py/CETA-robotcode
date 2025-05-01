@@ -1,19 +1,21 @@
-const float defaultspeed = 1.6;
-const float turnspeed = 1;
+const float defaultspeed = 1;
+const float turnspeed = 0.2;
 const float straighteningspeed = 100;
 
 float heading = 0;  
 const float headingchange = 0.07f;
 
 float whitethreshold = 0.5;
-float whiteoutspeed = 1.7; //AAAspeed
+float whiteoutspeed1 = 1.5; //AAAspeed
+float whiteoutspeed2 = -0.5; //AAAspeed
+
 
 int blackseeingquantity = 0;
-const int blackquantitythreshold = 2;
+const int blackquantitythreshold = 6;
 const float blackthreshold = 0.6;
 
 int blackwhitequantity = 0;
-const int lineskipthreshold = 2;
+const int lineskipthreshold = 5;
 
 int panickingquantity = 0;
 const int panickingthreshold = 15;
@@ -101,10 +103,10 @@ struct wheelSpeeds OnWhiteout(float heading) {
   panickingquantity += 1;
 
   if (heading < 0) {
-    struct wheelSpeeds uhoh = {defaultspeed - whiteoutspeed, defaultspeed +whiteoutspeed};
+    struct wheelSpeeds uhoh = {whiteoutspeed2, whiteoutspeed1};
     return uhoh;
   } else {
-    struct wheelSpeeds uhoh = {defaultspeed + whiteoutspeed, defaultspeed -whiteoutspeed};
+    struct wheelSpeeds uhoh = {whiteoutspeed1, whiteoutspeed2};
     return uhoh;
   }
 }
