@@ -26,12 +26,12 @@ void ForwardSlightly() {
 }
 
 void SlowTurnAround() {
-  SetWheelServoSpeed({2,2});
-  delay(500); //How long to go straight
+  SetWheelServoSpeed({1,1});
+  delay(700); //How long to go straight
   SetWheelServoSpeed({0,0});
   delay(100);
   SetWheelServoSpeed({-1,1});
-  delay(300);
+  delay(400);
   while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
     delay(5);
   }
