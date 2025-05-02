@@ -32,13 +32,14 @@ struct wheelSpeeds AdrianLineFollowing(struct lightSensorReadings inputs)
   else
   {
     newMotorSpeeds = {-0.8f * speed, -0.8f * speed};
+    delay(10);
   }
 
   //All are fully black (for detecting 'T')
   if (inputs.left >= fullBlackThreshhold && inputs.center >= fullBlackThreshhold && inputs.right >= fullBlackThreshhold)
   {
     seeBlack++;
-    if (seeBlack >= 3)
+    if (seeBlack >= 2)
     {
       newMotorSpeeds = SLOW_TURNAROUND;
       seeBlack = 0;
