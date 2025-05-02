@@ -1,26 +1,33 @@
-int duration = 2001;
+int curtime = 0;
 
-float lwheel(int time) {
-  return 0;
+void tdelay(int x) {
+  curtime += x;
+  delay(x);
 }
-
-float rwheel(int time) {
-  return 1/(duration - time);
+void w(struct wheelSpeeds inp) {
+  SetWheelServoSpeed(inp);
 }
-
 void Showcase() {
-  int time = 0;
-    while (time < duration) {
-      time += 50;
-      struct wheelSpeeds speds = {0.5f+lwheel(time), 0.5f+rwheel(time)};
-      SetWheelServoSpeed(speds);
-      delay(50);
-    }
-    time = 0;
-    while (time > -duration) {
-      time -= 50;
-      struct wheelSpeeds speds = {0.5f - lwheel(duration + time),0.5f - rwheel(duration + time)};
-      SetWheelServoSpeed(speds);
-      delay(50);
-    }
+  w({0.55,0.5});
+  tdelay(2400);
+  w({0.5,0.8});
+  delay(1000);
+  w({0,0.8});
+  delay(1000);
+  //Heart point turnaround
+  w({0.8,-0.5});
+  delay(500);
+  w({0.8,0.8});
+  delay(500);
+  w({0.5,0.8});
+  delay(1000);
+  w({0,0.8});
+  delay(1000);
+  
+
+
+
+
+  w({0,0});
+  delay(1000000);
 }

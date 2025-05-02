@@ -4,7 +4,7 @@
 struct wheelSpeeds stopSpeeds = {90,90};
 
 //constant to multiply the speed by
-float speedAdjustmentFactor[2] = {-19,-20}; 
+float speedAdjustmentFactor[2] = {-19.0,-20.0}; 
 
 Servo rServo;
 Servo lServo;

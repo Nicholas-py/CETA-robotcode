@@ -60,6 +60,6 @@ void WhenLineFollowing() {
     }
   }
   else {
-  SetWheelServoSpeed(newMotorSpeeds);
+    SetWheelServoSpeed(newMotorSpeeds);
   }
 }
