@@ -4,7 +4,7 @@
 struct wheelSpeeds stopSpeeds = {90,90};
 
 //constant to multiply the speed by
-float speedAdjustmentFactor[2] = {-19.0,-20.0}; 
+float speedAdjustmentFactor[2] = {-21.0,-20.0}; 
 
 Servo rServo;
 Servo lServo;
@@ -30,8 +30,8 @@ void SlowTurnAround() {
   delay(700); //How long to go straight
   SetWheelServoSpeed({0,0});
   delay(100);
-  SetWheelServoSpeed({-0.65,0.65});
-  delay(600);
+  SetWheelServoSpeed({-0.75,0.75});
+  delay(550);
   while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
     delay(5);
   }

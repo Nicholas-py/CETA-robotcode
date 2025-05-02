@@ -62,7 +62,7 @@ void InitalizeHQTTCConnection() {
 
   delay(250);
 
-  mqttClient.beginMessage(_Commands);
+  mqttClient.beginMessage(_ToServer);
   mqttClient.print("(C) Connected To Client");
   mqttClient.endMessage();
 
@@ -82,7 +82,7 @@ void waitForOnFromServer() {
     if (currentMillis - previousMillis >= interval) {
       previousMillis = currentMillis;
 
-      mqttClient.beginMessage(_Commands);
+      mqttClient.beginMessage(_ToServer);
       mqttClient.print("(W) Waiting for message to start");
       mqttClient.endMessage();
     }
@@ -92,7 +92,7 @@ void waitForOnFromServer() {
     //Amount of bytes that the "ON" Message is
     if (messageSize == 2) {
       Serial.print("Starting Robot");
-      mqttClient.beginMessage(_Commands);
+      mqttClient.beginMessage(_ToServer);
       mqttClient.print("(S) Starting Robot");
       mqttClient.endMessage();
       return;

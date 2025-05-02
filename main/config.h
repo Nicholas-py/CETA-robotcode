@@ -1,13 +1,6 @@
-//Adafruit configs
-#define _LMotor "ChessPlayer/feeds/cetaiotrobot31415.lmotor"
-#define _RMotor "ChessPlayer/feeds/cetaiotrobot31415.rmotor"
-
-#define _LSensor "ChessPlayer/feeds/cetaiotrobot31415.lmotor"
-#define _CSensor "ChessPlayer/feeds/cetaiotrobot31415.cmotor"
-#define _RSensor "ChessPlayer/feeds/cetaiotrobot31415.rmotor"
-
 #define _Commands "ChessPlayer/feeds/cetaiotrobot31415.commands"
 #define _Start "ChessPlayer/feeds/cetaiotrobot31415.start"
+#define _ToServer "ChessPlayer/feeds/cetaiotrobot31415.received"
 
 #define _ClientID "ea182fe498d648b8a8351534ac82f23b"
 #define _Username "ChessPlayer"
@@ -19,5 +12,5 @@ bool _shouldConnectToHQTTC = false;
 bool _ShouldStopAtWall = false;
 
 //config for selecting movement code 
-enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN}; //Adrian: 44s, Munjal: unknown, Nick: 28s
+enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN, REVUP}; //Adrian: 44s, Munjal: unknown, Nick: 28s
 enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = ADRIAN;
