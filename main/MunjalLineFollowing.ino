@@ -1,13 +1,13 @@
 float leftError = 0;
 float rightError = 0;
 float stop = 0;
-float stopTH = 20;
+float stopTH = 30;
 float BTH = 0.5;
-float multiplier = 0.2;
+float multiplier = 0.35;
 
-float constant = 1;
+float constant = 1.5;
 float correction = 1;
-float aggressiveCorrection = 2;
+float aggressiveCorrection = 3.5;
 
 struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
 {
@@ -22,8 +22,15 @@ struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
     stop = 0;
   }
   
+  //Robot on track
+  if (inputs.center >= BTH)
+  {
+    leftError = 0;
+    rightError = 0;
+  }
+
   //Robot deviated right
-  if (inputs.left > BTH && inputs.right <= BTH)
+  else if (inputs.left > BTH && inputs.right <= BTH)
   {
     rightError = correction;
     leftError = -correction;
@@ -36,13 +43,6 @@ struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
     rightError = -correction;
   }
  
-  //Robot on track
-  else if (inputs.center >= BTH)
-  {
-    leftError = 0;
-    rightError = 0;
-  }
-
   //Robot sees all three white
   else if (inputs.left < BTH && inputs.right < BTH && inputs.center < BTH)
   {
@@ -58,7 +58,7 @@ struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
 
   //Decide what to return
   if (stop >= stopTH) {
-    // return SLOW_TURNAROUND;
+    newMotorSpeeds = SLOW_TURNAROUND;
   }
   else {
     newMotorSpeeds = {constant+multiplier*leftError, constant+multiplier*rightError}; //Run the robot as normal
