@@ -8,10 +8,10 @@ void w(struct wheelSpeeds inp) {
   SetWheelServoSpeed(inp);
 }
 void Showcase() {
-  w({0.55,0.5});
-  tdelay(2400);
+  w({0.6,0.6});
+  tdelay(5400);
   w({0.5,0.8});
-  delay(1000);
+  delay(1500);
   w({0,0.8});
   delay(1000);
   //Heart point turnaround
@@ -22,7 +22,9 @@ void Showcase() {
   w({0.5,0.8});
   delay(1000);
   w({0,0.8});
-  delay(1000);
+  delay(1500);
+  w({0.6,0.6});
+  delay(5000);
   
 
 
