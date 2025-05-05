@@ -40,7 +40,8 @@ void setup() {
   //Connects wheels to pins so we may comunicate with them
   MotorSetup();
 
-  //Showcase();
+  if (_CurrentLineFollowingLogic == SHOWCASE) {
+  Showcase();}
 
   // Allows toggoling on and off weather the robot should be calabrated
   if (_ShouldCalibrate == true) {
