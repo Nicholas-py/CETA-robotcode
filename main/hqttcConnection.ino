@@ -22,10 +22,11 @@ float count = 0.0;
 void InitalizeHQTTCConnection() {
   
   //Initialize serial and wait for port to open:
-  Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
+  Serial.begin(115200);
+  //while (!Serial) {
+  //  ; // wait for serial port to connect. Needed for native USB port only
+  //}
+  delay(1000);
 
   // attempt to connect to WiFi network:
   Serial.print("Attempting to connect to WPA SSID: ");
@@ -56,6 +57,10 @@ void InitalizeHQTTCConnection() {
 
   Serial.println("You're connected to the MQTT broker!");
   Serial.println();
+
+  digitalWrite(14, HIGH);  
+  delay(500);
+  digitalWrite(14, LOW);
 
   //mqttClient.subscribe(_Commands);
   mqttClient.subscribe(_Start);

@@ -1,6 +1,6 @@
 int numberOfTurnarounds = 0;
 
-//Chouses 1 of the 2 turn arounds to use based on the inputed wheel speeds
+//Chooses 1 of the 2 turn arounds to use based on the inputed wheel speeds
 void PickWhichTurnAround(struct wheelSpeeds code) {
   pinMode(14, OUTPUT);
   digitalWrite(14,HIGH);
