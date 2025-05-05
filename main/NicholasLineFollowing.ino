@@ -1,21 +1,21 @@
-const float defaultspeed = 1;
+const float defaultspeed = 2; //W - 2
 const float turnspeed = 0.2;
 const float straighteningspeed = 100;
 
 float heading = 0;  
-const float headingchange = 0.07f;
+const float headingchange = 0.08f;  //W - 0.08
 
 float whitethreshold = 0.5;
-float whiteoutspeed1 = 1.5; //AAAspeed
-float whiteoutspeed2 = -0.5; //AAAspeed
+float whiteoutspeed1 = 4; //AAAspeed /W- 2.4
+float whiteoutspeed2 = 0; //AAAspeed /W - 0.5
 
 
 int blackseeingquantity = 0;
-const int blackquantitythreshold = 6;
+const int blackquantitythreshold = 9;
 const float blackthreshold = 0.6;
 
 int blackwhitequantity = 0;
-const int lineskipthreshold = 5;
+const int lineskipthreshold = 10;
 
 int panickingquantity = 0;
 const int panickingthreshold = 15;
@@ -33,9 +33,9 @@ struct wheelSpeeds NicholasLineFollowing(struct lightSensorReadings inputs) {
     blackwhitequantity++;
     if (blackwhitequantity >= lineskipthreshold) {
       blackwhitequantity = 0;
-    heading = 0;
-    panickingquantity = 0;
-    return {0,0};}
+      heading = 0;
+      panickingquantity = 0;
+      return {0,0};}
   }
 
   else if (SensorsDetectStraight(inputs)) {
@@ -49,6 +49,7 @@ struct wheelSpeeds NicholasLineFollowing(struct lightSensorReadings inputs) {
   }
   
   struct wheelSpeeds toreturn = { defaultspeed + turnspeed * heading, defaultspeed - turnspeed * heading };
+  Serial.println(toreturn.left);
   return toreturn;
 }
 
