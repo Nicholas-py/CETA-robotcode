@@ -8,9 +8,9 @@ void w(struct wheelSpeeds inp) {
   SetWheelServoSpeed(inp);
 }
 void Showcase() {
-  w({0.6,0.6});
-  tdelay(5400);
-  w({0.5,0.8});
+  w({0.6,0.7});
+  tdelay(3500);
+  w({0.3,0.8});
   delay(1500);
   w({0,0.8});
   delay(1000);
@@ -23,8 +23,8 @@ void Showcase() {
   delay(1000);
   w({0,0.8});
   delay(1500);
-  w({0.6,0.6});
-  delay(5000);
+  w({0.6,0.7});
+  delay(4000);
   
 
 

@@ -12,5 +12,5 @@ bool _shouldConnectToHQTTC = false;
 bool _ShouldStopAtWall = false;
 
 //config for selecting movement code 
-enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN, REVUP, SHOWCASE}; //Adrian: 44s, Munjal: unknown, Nick: 28s
-enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = MUNJAL;
+enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN, REVUP, SHOWCASE}; //Adrian: 44s, Munjal: 21a, Nick: 22s
+enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = NICHOLAS;

@@ -6,8 +6,9 @@ float heading = 0;
 const float headingchange = 0.08f;  //W - 0.08
 
 float whitethreshold = 0.5;
-float whiteoutspeed1 = 4; //AAAspeed /W- 2.4
-float whiteoutspeed2 = 0; //AAAspeed /W - 0.5
+float whiteoutspeed1 = 2; //AAAspeed /W- 4
+float whiteoutspeed2 = -0.5; //AAAspeed /W - 0
+
 
 
 int blackseeingquantity = 0;
@@ -35,8 +36,9 @@ struct wheelSpeeds NicholasLineFollowing(struct lightSensorReadings inputs) {
       blackwhitequantity = 0;
       heading = 0;
       panickingquantity = 0;
-      return {0,0};}
   }
+        return {-OnWhiteout(heading).left,-OnWhiteout(heading).right};}
+
 
   else if (SensorsDetectStraight(inputs)) {
     heading = OnPathStraight(heading);
@@ -102,7 +104,7 @@ bool Panicking() {
 struct wheelSpeeds OnWhiteout(float heading) {
   Serial.println("Robot is fully on white");
   panickingquantity += 1;
-
+  
   if (heading < 0) {
     struct wheelSpeeds uhoh = {whiteoutspeed2, whiteoutspeed1};
     return uhoh;
