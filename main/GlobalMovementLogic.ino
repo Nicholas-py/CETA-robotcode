@@ -44,7 +44,7 @@ void WhenLineFollowing() {
 
   if (_ShouldStopAtWall && GetUltrasonicInput())
   {
-    newMotorSpeeds = FAST_TURNAROUND;
+    newMotorSpeeds = SLOW_TURNAROUND;
   }
 
   if (newMotorSpeeds.right == turnAroundErrorCode)
