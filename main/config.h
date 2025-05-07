@@ -13,4 +13,4 @@ bool _ShouldStopAtWall = true;
 
 //config for selecting movement code 
 enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN, REVUP, SHOWCASE}; //Adrian: 44s, Munjal: 21a, Nick: 22s
-enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = MUNJAL;
+enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = NICHOLAS;

@@ -3,11 +3,13 @@ const float turnspeed = 0.2;
 const float straighteningspeed = 100;
 
 float heading = 0;  
-const float headingchange = 0.08f;  //W - 0.08
+const float headingchange = 0.1f;  //W - 0.08
 
-float whitethreshold = 0.5;
+float whitethreshold = 0.6;
 float whiteoutspeed1 = 2; //AAAspeed /W- 4
-float whiteoutspeed2 = -0.5; //AAAspeed /W - 0
+float whiteoutspeed2 = 0.5; //AAAspeed /W - 0
+float whiteoutspeed21 = 8; //AAAspeed /W- 4
+float whiteoutspeed22 = -1; //AAAspeed /W - 0
 
 
 
@@ -19,15 +21,18 @@ int blackwhitequantity = 0;
 const int lineskipthreshold = 10;
 
 int panickingquantity = 0;
-const int panickingthreshold = 15;
+const int panickingthreshold = 1000;
 
 struct wheelSpeeds NicholasLineFollowing(struct lightSensorReadings inputs) {
-
+  delay(1);
   if (ShouldTurnAround(inputs)) {
     return SLOW_TURNAROUND;
   }
 
   else if (SensorsDetectAllWhite(inputs)) {
+    if (Panicking()) {
+          digitalWrite(14,HIGH);
+    }
     return OnWhiteout(heading); 
   } 
   else if (Panicking()) {
@@ -36,6 +41,7 @@ struct wheelSpeeds NicholasLineFollowing(struct lightSensorReadings inputs) {
       blackwhitequantity = 0;
       heading = 0;
       panickingquantity = 0;
+        digitalWrite(14,LOW);
   }
         return {-OnWhiteout(heading).left,-OnWhiteout(heading).right};}
 
@@ -49,7 +55,6 @@ struct wheelSpeeds NicholasLineFollowing(struct lightSensorReadings inputs) {
   else {
     heading = OnDrifting(heading, inputs.right < inputs.left, inputs.center < 0.5);
   }
-  
   struct wheelSpeeds toreturn = { defaultspeed + turnspeed * heading, defaultspeed - turnspeed * heading };
   Serial.println(toreturn.left);
   return toreturn;
@@ -90,7 +95,7 @@ bool SensorsDetectStraight(struct lightSensorReadings inputs) {
   if (inputs.center > inputs.right+inputs.left) {
     return true;
   }
-  if (inputs.right - inputs.left < 0.2 && inputs.center > whitethreshold){
+  if (inputs.right - inputs.left < 0.2 && inputs.center > blackthreshold){
     return true;
   }
   return false;
@@ -104,7 +109,16 @@ bool Panicking() {
 struct wheelSpeeds OnWhiteout(float heading) {
   Serial.println("Robot is fully on white");
   panickingquantity += 1;
-  
+  if (Panicking()) {
+    if (heading < 0) {
+    struct wheelSpeeds uhoh = {whiteoutspeed22, whiteoutspeed21};
+    return uhoh;
+  } else {
+    struct wheelSpeeds uhoh = {whiteoutspeed21, whiteoutspeed22};
+    return uhoh;
+  }
+
+  }
   if (heading < 0) {
     struct wheelSpeeds uhoh = {whiteoutspeed2, whiteoutspeed1};
     return uhoh;
