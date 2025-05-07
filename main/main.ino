@@ -22,7 +22,7 @@ enum RobotMovementStates {
 float turnAroundErrorCode = 2398424;
 struct wheelSpeeds SLOW_TURNAROUND = {94096584.0,turnAroundErrorCode};
 struct wheelSpeeds FAST_TURNAROUND = {82364983.0,turnAroundErrorCode};
-struct wheelSpeeds SUPPER_TURNAROUND = {71234126.0,turnAroundErrorCode};
+struct wheelSpeeds SPIN_TURNAROUND = {71234126.0,turnAroundErrorCode};
 
 // Will have the robot start by following the line
 enum RobotMovementStates CurrentRobotMovementState = FOLLOWING;

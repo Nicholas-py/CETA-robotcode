@@ -25,9 +25,8 @@ void ForwardSlightly() {
     delay(400);
 }
 
-void SlowTurnAround() {
-  SetWheelServoSpeed({1,1});
-  delay(700); //How long to go straight
+void Spin()
+{
   SetWheelServoSpeed({0,0});
   delay(100);
   SetWheelServoSpeed({-0.75,0.75});
@@ -39,6 +38,12 @@ void SlowTurnAround() {
   //SetWheelServoSpeed({-0.75,0.75});
   delay(300);
   setNewRobotMovementState(FOLLOWING);
+}
+
+void SlowTurnAround() {
+  SetWheelServoSpeed({1,1});
+  delay(700); //How long to go straight
+  Spin();
 }
 
 void SupperTurnAround() {

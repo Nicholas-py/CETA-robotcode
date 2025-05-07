@@ -1,26 +1,13 @@
-//Line following only values
 float leftError = 0;
 float rightError = 0;
 float stop = 0;
 float stopTH = 30;
 float BTH = 0.5;
-float multiplier = 0.35;
+float multiplier = 0.4;
 
-float constant = 1.5;
+float constant = 1.6;
 float correction = 1;
-float aggressiveCorrection = 3.5;
-
-//Ultrasonic values
-// float leftError = 0;
-// float rightError = 0;
-// float stop = 0;
-// float stopTH = 3;
-// float BTH = 0.5;
-// float multiplier = 0.3;
-
-// float constant = 1.2;
-// float correction = 1;
-// float aggressiveCorrection = 3.5;
+float aggressiveCorrection = 3.7;
 
 struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
 {
@@ -35,13 +22,12 @@ struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
     stop += 1;
   }
   else {
-    stop = 0;
-    // if (stop <= 0) {
-    //   stop = 0;
-    // }
-    // else {
-    //   stop -= 1;
-    // }
+    if (stop <= 0) {
+      stop = 0;
+    }
+    else {
+      stop -= 1;
+    }
   }
   
   //Robot on track
@@ -80,6 +66,7 @@ struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
 
   //Decide what to return
   if (stop >= stopTH) {
+    stop = 0;
     newMotorSpeeds = SLOW_TURNAROUND;
   }
   else {

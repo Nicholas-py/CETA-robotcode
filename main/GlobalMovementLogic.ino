@@ -1,4 +1,6 @@
 int numberOfTurnarounds = 0;
+int counter = 0;
+int counterTH = 75; //How many cycles between ultrasonic readings
 
 //Chooses 1 of the 2 turn arounds to use based on the inputed wheel speeds
 void PickWhichTurnAround(struct wheelSpeeds code) {
@@ -10,8 +12,8 @@ void PickWhichTurnAround(struct wheelSpeeds code) {
   else if (code.left == FAST_TURNAROUND.left) {
     FastTurnAround();
   }
-  else if (code.left == SUPPER_TURNAROUND.left) {
-    SupperTurnAround();
+  else if (code.left == SPIN_TURNAROUND.left) {
+    Spin();
   }
   digitalWrite(14,LOW);
 }
@@ -42,9 +44,13 @@ void WhenLineFollowing() {
 
   struct wheelSpeeds newMotorSpeeds = executeLineFollowing();
 
-  if (_ShouldStopAtWall && GetUltrasonicInput())
+  if (counter >= counterTH) 
   {
-    newMotorSpeeds = SLOW_TURNAROUND;
+    counter = 0;
+    if (_ShouldStopAtWall && GetUltrasonicInput())
+    {
+      newMotorSpeeds = SPIN_TURNAROUND;
+    }
   }
 
   if (newMotorSpeeds.right == turnAroundErrorCode)
@@ -65,4 +71,6 @@ void WhenLineFollowing() {
   else {
     SetWheelServoSpeed(newMotorSpeeds);
   }
+
+  counter += 1;
 }

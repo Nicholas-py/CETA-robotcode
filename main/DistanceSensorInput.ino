@@ -9,7 +9,7 @@
 unsigned long collisionDistanceCurrentSampleTime;  // Used for controlling collision sensor sample rate
 unsigned long collisionDistancePreviousSampleTime = 0;
 const long collisionDistanceSampleInterval = 10; //Will get a reading every 10 ms
-float collisionDetectThreshold = 10; //Threshold is 10 cm
+float collisionDetectThreshold = 12; //Threshold is 10 cm
 float collisionDistance;
 
 //Instantiate an UltrasonicDistanceSensor object
