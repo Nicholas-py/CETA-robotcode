@@ -28,7 +28,7 @@ void ForwardSlightly() {
 void Spin()
 {
   SetWheelServoSpeed({0,0});
-  delay(100);
+  delay(10);
   SetWheelServoSpeed({-0.99,0.99});
   delay(425);
   while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
@@ -36,13 +36,13 @@ void Spin()
   }
   SetWheelServoSpeed({0,0});
   //SetWheelServoSpeed({-0.75,0.75});
-  delay(50);
+  delay(10);
   setNewRobotMovementState(FOLLOWING);
 }
 
 void SlowTurnAround() {
   SetWheelServoSpeed({0.75,1});
-  delay(700); //How long to go straight
+  delay(50); //How long to go straight
   Spin();
 }
 

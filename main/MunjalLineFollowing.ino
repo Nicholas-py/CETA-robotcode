@@ -1,29 +1,31 @@
-// float leftError = 0;
-// float rightError = 0;
-// float stop = 0;
-// float originalStopTH = 40;
-// float stopTH = originalStopTH;
-// float aggressiveStopTH = 70;
-// float BTH = 0.6;
-// float multiplier = 0.35;
-
-// float originalConstant = 1.4;
-// float constant = originalConstant;
-// float aggressiveConstant = 0.8;
-// float correction = 1;
-// float aggressiveCorrection = 3.6;
-
-// Working values:
 float leftError = 0;
 float rightError = 0;
 float stop = 0;
-float stopTH = 40;
+float originalStopTH = 40;
+float stopTH = originalStopTH;
+float aggressiveStopTH = 70;
 float BTH = 0.6;
 float multiplier = 0.4;
 
-float constant = 1.4;
+float originalConstant = 1.7;
+float constant = originalConstant;
+float aggressiveConstant = 1.5;
 float correction = 1;
 float aggressiveCorrection = 4.3;
+float aggressiveCounter = 0;
+float aggressiveTH = 25;
+
+// Working values:
+// float leftError = 0;
+// float rightError = 0;
+// float stop = 0;
+// float stopTH = 40;
+// float BTH = 0.6;
+// float multiplier = 0.4;
+
+// float constant = 1.4;
+// float correction = 1;
+// float aggressiveCorrection = 4.3;
 // No aggressive constants or stopTH
 
 struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
@@ -50,8 +52,9 @@ struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
   //Robot on track
   if (inputs.center >= BTH)
   {
-    // constant = originalConstant;
-    // stopTH = originalStopTH;
+    constant = originalConstant;
+    stopTH = originalStopTH;
+    aggressiveCounter = 0;
     leftError = 0;
     rightError = 0;
   }
@@ -74,14 +77,20 @@ struct wheelSpeeds MunjalLineFollowing(struct lightSensorReadings inputs)
   else if (inputs.left < BTH && inputs.right < BTH && inputs.center < BTH)
   {
     if (leftError > 0) {
-      // constant = aggressiveConstant;
-      // stopTH = aggressiveStopTH;
+      aggressiveCounter += 1;
+      if (aggressiveCounter <= aggressiveTH) {
+        constant = aggressiveConstant;
+        stopTH = aggressiveStopTH;
+      }
       leftError = aggressiveCorrection;
       rightError = -aggressiveCorrection;
     }
     else if (rightError > 0) {
-      // constant = aggressiveConstant;
-      // stopTH = aggressiveStopTH;
+      aggressiveCounter += 1;
+      if (aggressiveCounter <= aggressiveTH) {
+        constant = aggressiveConstant;
+        stopTH = aggressiveStopTH;
+      }
       rightError = aggressiveCorrection;
       leftError = -aggressiveCorrection;
     }

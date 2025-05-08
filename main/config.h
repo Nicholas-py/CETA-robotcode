@@ -8,7 +8,7 @@
 //Settings for debugging
 bool _ShouldCalibrate = true;
 bool _StopAfterFourTurns = true;
-bool _shouldConnectToHQTTC = false;
+bool _shouldConnectToHQTTC = true;
 bool _ShouldStopAtWall = false;
 
 //config for selecting movement code 
