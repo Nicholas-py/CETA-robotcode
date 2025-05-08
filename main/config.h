@@ -9,8 +9,8 @@
 bool _ShouldCalibrate = true;
 bool _StopAfterFourTurns = true;
 bool _shouldConnectToHQTTC = false;
-bool _ShouldStopAtWall = true;
+bool _ShouldStopAtWall = false;
 
 //config for selecting movement code 
 enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN, REVUP, SHOWCASE}; //Adrian: 44s, Munjal: 21a, Nick: 22s
-enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = NICHOLAS;
+enum PossibleLineFollowingLogics _CurrentLineFollowingLogic = MUNJAL;

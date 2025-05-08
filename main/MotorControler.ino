@@ -29,19 +29,19 @@ void Spin()
 {
   SetWheelServoSpeed({0,0});
   delay(100);
-  SetWheelServoSpeed({-0.75,0.75});
-  delay(550);
+  SetWheelServoSpeed({-0.99,0.99});
+  delay(425);
   while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
     delay(5);
   }
   SetWheelServoSpeed({0,0});
   //SetWheelServoSpeed({-0.75,0.75});
-  delay(300);
+  delay(50);
   setNewRobotMovementState(FOLLOWING);
 }
 
 void SlowTurnAround() {
-  SetWheelServoSpeed({1,1});
+  SetWheelServoSpeed({0.75,1});
   delay(700); //How long to go straight
   Spin();
 }

@@ -1,7 +1,7 @@
 //some general ideas to improve the movment code
 
-float blackThreshhold = 0.65;
-float fullBlackThreshhold = 0.88;
+float blackThreshhold = 0.75;
+float fullBlackThreshhold = 0.91;
 float speed = 1;
 int seeBlack;
 
