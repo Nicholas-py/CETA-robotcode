@@ -11,7 +11,7 @@ void Showcase() {
   w({0.6,0.7});
   tdelay(3500);
   w({0.3,0.8});
-  delay(1500);
+  delay(2000);
   w({0,0.8});
   delay(1000);
   //Heart point turnaround
@@ -22,7 +22,7 @@ void Showcase() {
   w({0.5,0.8});
   delay(1000);
   w({0,0.8});
-  delay(1500);
+  delay(2000);
   w({0.6,0.7});
   delay(4000);
   

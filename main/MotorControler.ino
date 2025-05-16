@@ -22,7 +22,7 @@ void SetWheelServoSpeed(struct wheelSpeeds newMotorSpeeds)
 
 void ForwardSlightly() {
     SetWheelServoSpeed({1,1});
-    delay(400);
+    delay(300);
 }
 
 void Spin()
