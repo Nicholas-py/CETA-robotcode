@@ -35,7 +35,9 @@ struct wheelSpeeds executeLineFollowing()
     newMotorSpeeds = MunjalLineFollowing(lightSensorInputs);
 
   else if (_CurrentLineFollowingLogic == REVUP)
-    newMotorSpeeds = RevUp();
+    newMotorSpeeds = RevUp(); 
+  else if (_CurrentLineFollowingLogic == CARNAVAL)
+    newMotorSpeeds = Carnaval();
 
   return newMotorSpeeds;
 }

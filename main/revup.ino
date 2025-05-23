@@ -7,3 +7,8 @@ struct wheelSpeeds RevUp() {
   delay(20);
   return newMotorSpeeds;
   }
+
+struct wheelSpeeds Carnaval() { 
+  struct wheelSpeeds newMotorSpeeds = {1, 1};
+  return newMotorSpeeds;
+  }

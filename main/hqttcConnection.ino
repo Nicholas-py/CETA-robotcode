@@ -19,6 +19,8 @@ unsigned long previousMillis = 0;
 
 float count = 0.0;
 
+bool waitingForConection = true;
+
 void InitalizeHQTTCConnection() {
   
   //Initialize serial and wait for port to open:
@@ -62,6 +64,9 @@ void InitalizeHQTTCConnection() {
   delay(500);
   digitalWrite(14, LOW);
 
+  //Assign the function to recive the messages
+  mqttClient.onMessage(onMqttMessage);
+
   //mqttClient.subscribe(_Commands);
   mqttClient.subscribe(_Start);
 
@@ -71,13 +76,13 @@ void InitalizeHQTTCConnection() {
   mqttClient.print("(C) Connected To Client");
   mqttClient.endMessage();
 
-  waitForOnFromServer();
-
+  if (_MQTTCStart)
+    waitForOnFromServer();
 }
 
 void waitForOnFromServer() {
   // avoids being disconnected by the broker
-  while (true)
+  while (waitingForConection)
   {
     mqttClient.poll();
 
@@ -91,16 +96,23 @@ void waitForOnFromServer() {
       mqttClient.print("(W) Waiting for message to start");
       mqttClient.endMessage();
     }
+  }
+}
 
-    int messageSize = mqttClient.parseMessage();
-
-    //Amount of bytes that the "ON" Message is
+void onMqttMessage(int messageSize)
+{
+  //Amount of bytes that the "ON" Message is
     if (messageSize == 2) {
       Serial.print("Starting Robot");
       mqttClient.beginMessage(_ToServer);
       mqttClient.print("(S) Starting Robot");
       mqttClient.endMessage();
+      waitingForConection = false;
       return;
     }
-  }
+}
+
+void HQTTCPole()
+{
+  mqttClient.poll();
 }

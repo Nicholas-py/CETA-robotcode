@@ -1,4 +1,5 @@
 #include "config.h"
+#include <ArduinoMqttClient.h>
 
 struct wheelSpeeds {
   float left;
@@ -26,8 +27,6 @@ struct wheelSpeeds SPIN_TURNAROUND = {71234126.0,turnAroundErrorCode};
 
 // Will have the robot start by following the line
 enum RobotMovementStates CurrentRobotMovementState = FOLLOWING;
-
-
 
 void setup() {
 
@@ -62,6 +61,8 @@ void setup() {
 
 
 void loop() {
+  if (_shouldConnectToHQTTC)
+    HQTTCPole();
   
   if (CurrentRobotMovementState == FOLLOWING) {
     WhenLineFollowing();
