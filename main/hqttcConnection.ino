@@ -80,18 +80,20 @@ void InitalizeHQTTCConnection() {
     waitForOnFromServer();
 }
 
+//Stalls the program until it recives ON from the broker
 void waitForOnFromServer() {
-  // avoids being disconnected by the broker
   while (waitingForConection)
   {
-    mqttClient.poll();
+    //Keeps the client connected to the broker
+    HQTTCPole();
 
     unsigned long currentMillis = millis();
     
-    //Don't overthrotal
+    //Send messages periodicaly to not overthrawtle
     if (currentMillis - previousMillis >= interval) {
       previousMillis = currentMillis;
 
+      //Send message to the broker
       mqttClient.beginMessage(_ToServer);
       mqttClient.print("(W) Waiting for message to start");
       mqttClient.endMessage();
@@ -99,6 +101,7 @@ void waitForOnFromServer() {
   }
 }
 
+//Called when a message is sent by the broker
 void onMqttMessage(int messageSize)
 {
   //Amount of bytes that the "ON" Message is
@@ -108,10 +111,12 @@ void onMqttMessage(int messageSize)
       mqttClient.print("(S) Starting Robot");
       mqttClient.endMessage();
       waitingForConection = false;
+      Serial.println((char)mqttClient.read());
       return;
     }
 }
 
+//Keeps the client connected to the broker
 void HQTTCPole()
 {
   mqttClient.poll();
