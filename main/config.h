@@ -9,8 +9,9 @@
 bool _ShouldCalibrate = false;
 bool _StopAfterFourTurns = false;
 bool _shouldConnectToHQTTC = true;
-bool _MQTTCStart = true;
-bool _ShouldStopAtWall = false;
+bool _MQTTCStart = false;
+bool _ShouldStopAtWall = true;
+bool _CarnavalTurn = true;
 
 //config for selecting movement code 
 enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN, REVUP, SHOWCASE, CARNAVAL}; //Adrian: 44s, Munjal: 21, Nick: 22s

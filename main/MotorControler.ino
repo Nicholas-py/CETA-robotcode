@@ -14,6 +14,14 @@ void MotorSetup() {
   lServo.attach(5);
 }
 
+void SetSpeedAdjustmentFactor(float newAdjustmentFactor[2])
+{
+  speedAdjustmentFactor[0] = newAdjustmentFactor[0];
+  speedAdjustmentFactor[1] = newAdjustmentFactor[1];
+
+
+}
+
 void SetWheelServoSpeed(struct wheelSpeeds newMotorSpeeds) 
 {
   lServo.write(newMotorSpeeds.left  * speedAdjustmentFactor[0] + stopSpeeds.left);
@@ -46,6 +54,13 @@ void SlowTurnAround() {
   Spin();
 }
 
+void Turn90Deg()
+{
+  SetWheelServoSpeed({-1,0.9});
+  delay(400);
+  setNewRobotMovementState(FOLLOWING);
+}
+
 void SupperTurnAround() {
   SetWheelServoSpeed({2,2});
   delay(300); //How long to go straight
@@ -60,17 +75,6 @@ void SupperTurnAround() {
   //SetWheelServoSpeed({-0.75,0.75});
   delay(300);
   setNewRobotMovementState(FOLLOWING);
-}
-
-void FastTurnAround() {
-  delay(300);
-  while (SensorsDetectAllWhite(GetCalibratedSensorInputs())) {
-    delay(10);
-  }
-  SetWheelServoSpeed({0,0});
-  delay(300);
-  setNewRobotMovementState(FOLLOWING);
-
 }
 
 void PrintMotorSpeeds(struct wheelSpeeds toprint) {

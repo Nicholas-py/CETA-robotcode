@@ -6,11 +6,14 @@ int counterTH = 75; //How many cycles between ultrasonic readings
 void PickWhichTurnAround(struct wheelSpeeds code) {
   pinMode(14, OUTPUT);
   digitalWrite(14,HIGH);
+  if (_CarnavalTurn == true)
+  {
+    Turn90Deg();
+    digitalWrite(14,LOW);
+    return;
+  }
   if (code.left == SLOW_TURNAROUND.left) {
     SlowTurnAround();
-  }
-  else if (code.left == FAST_TURNAROUND.left) {
-    FastTurnAround();
   }
   else if (code.left == SPIN_TURNAROUND.left) {
     Spin();
