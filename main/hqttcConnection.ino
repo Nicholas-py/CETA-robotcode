@@ -128,8 +128,14 @@ void onMqttMessage(int messageSize)
       inString += ((char)mqttClient.read());
     }
     float inNum = inString.toFloat();
-    float newSpeed = inNum;
-    SetCarnavalSpeed(newSpeed);
+    if (!_ModAllSpeeds)
+      SetCarnavalSpeed(inNum);
+    else
+    {
+      float newSpeedsInForm[2] = {-inNum, -inNum};
+      SetSpeedAdjustmentFactor(newSpeedsInForm);
+    }
+
   }
   //Amount of bytes that the "ON" Message is
     if (_MQTTCStart && mqttClient.messageTopic() == "ChessPlayer/feeds/cetaiotrobot31415.start" && messageSize == 2) {

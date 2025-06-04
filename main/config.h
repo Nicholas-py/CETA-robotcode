@@ -14,6 +14,7 @@ bool _MQTTCStart = false;
 bool _ShouldStopAtWall = true;
 bool _CarnavalTurn = true;
 bool _TurnOnRecive = true;
+bool _ModAllSpeeds = true;
 
 //config for selecting movement code 
 enum PossibleLineFollowingLogics {NICHOLAS, MUNJAL, ADRIAN, REVUP, SHOWCASE, CARNAVAL}; //Adrian: 44s, Munjal: 21, Nick: 22s
