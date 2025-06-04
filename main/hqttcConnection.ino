@@ -70,6 +70,7 @@ void InitalizeHQTTCConnection() {
   //mqttClient.subscribe(_Commands);
   mqttClient.subscribe(_Start);
   mqttClient.subscribe(_Commands);
+  mqttClient.subscribe(_TurnDirection);
 
   delay(250);
 
@@ -105,19 +106,29 @@ void waitForOnFromServer() {
 //Called when a message is sent by the broker
 void onMqttMessage(int messageSize)
 {
+  if (mqttClient.messageTopic() == "ChessPlayer/feeds/cetaiotrobot31415.direction")
+  {
+    char inString = (char)mqttClient.read();
+    if (inString == 'L')
+      changeDirection(0);
+    if (inString == 'R')
+      changeDirection(1);
+
+  }
+
   if (mqttClient.messageTopic() == "ChessPlayer/feeds/cetaiotrobot31415.commands")
   {
     String inString = "";
-    Serial.print("Number: ");
+    //Serial.print("Number: ");
     while (mqttClient.available()) {
       inString += ((char)mqttClient.read());
     }
     float inNum = inString.toFloat();
-    float newSpeeds[2] = {-inNum, -inNum};
-    SetSpeedAdjustmentFactor(newSpeeds);
+    float newSpeed = inNum;
+    SetCarnavalSpeed(newSpeed);
   }
   //Amount of bytes that the "ON" Message is
-    if (messageSize == 17) {
+    if (_MQTTCStart && mqttClient.messageTopic() == "ChessPlayer/feeds/cetaiotrobot31415.start" && messageSize == 2) {
       Serial.print("Starting Robot");
       mqttClient.beginMessage(_ToServer);
       mqttClient.print("(S) Starting Robot");

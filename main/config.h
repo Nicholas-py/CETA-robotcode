@@ -1,6 +1,7 @@
 #define _Commands "ChessPlayer/feeds/cetaiotrobot31415.commands"
 #define _Start "ChessPlayer/feeds/cetaiotrobot31415.start"
 #define _ToServer "ChessPlayer/feeds/cetaiotrobot31415.received"
+#define _TurnDirection "ChessPlayer/feeds/cetaiotrobot31415.direction"
 
 #define _ClientID "ea182fe498d648b8a8351534ac82f23b"
 #define _Username "ChessPlayer"

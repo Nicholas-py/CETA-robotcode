@@ -8,7 +8,14 @@ struct wheelSpeeds RevUp() {
   return newMotorSpeeds;
   }
 
+float carnavalSpeed = 1;
+
 struct wheelSpeeds Carnaval() { 
-  struct wheelSpeeds newMotorSpeeds = {1, 1};
+  struct wheelSpeeds newMotorSpeeds = {carnavalSpeed, carnavalSpeed};
   return newMotorSpeeds;
   }
+
+void SetCarnavalSpeed(float in)
+{
+  carnavalSpeed = in / 15;
+}

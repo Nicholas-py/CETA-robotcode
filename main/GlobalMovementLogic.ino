@@ -2,16 +2,32 @@ int numberOfTurnarounds = 0;
 int counter = 0;
 int counterTH = 75; //How many cycles between ultrasonic readings
 
+String direction = "left";
+void changeDirection(int d)
+{
+  if (d == 0)
+    direction = "left";
+  else
+    direction = "right";
+}
+
 //Chooses 1 of the 2 turn arounds to use based on the inputed wheel speeds
 void PickWhichTurnAround(struct wheelSpeeds code) {
   pinMode(14, OUTPUT);
   digitalWrite(14,HIGH);
-  if (_CarnavalTurn == true)
+  if (_CarnavalTurn == true && direction == "left")
   {
-    Turn90Deg();
+    Turn90Deg(1);
     digitalWrite(14,LOW);
     return;
   }
+  if (_CarnavalTurn == true && direction == "right")
+  {
+    Turn90Deg(-1);
+    digitalWrite(14,LOW);
+    return;
+  }
+
   if (code.left == SLOW_TURNAROUND.left) {
     SlowTurnAround();
   }

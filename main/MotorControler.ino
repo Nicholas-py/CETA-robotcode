@@ -4,7 +4,7 @@
 struct wheelSpeeds stopSpeeds = {90,90};
 
 //constant to multiply the speed by
-float speedAdjustmentFactor[2] = {-21.0,-20.0}; 
+float speedAdjustmentFactor[2] = {-21.0,-23.0}; 
 
 Servo rServo;
 Servo lServo;
@@ -54,9 +54,9 @@ void SlowTurnAround() {
   Spin();
 }
 
-void Turn90Deg()
+void Turn90Deg(float mult)
 {
-  SetWheelServoSpeed({-1,0.9});
+  SetWheelServoSpeed({-1 * mult,1 * mult});
   delay(400);
   setNewRobotMovementState(FOLLOWING);
 }
