@@ -57,7 +57,7 @@ void SlowTurnAround() {
 void Turn90Deg(float mult)
 {
   SetWheelServoSpeed({-1 * mult,1 * mult});
-  delay(400);
+  delay(600);
   setNewRobotMovementState(FOLLOWING);
 }
 

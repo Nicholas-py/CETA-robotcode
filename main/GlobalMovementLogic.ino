@@ -1,6 +1,12 @@
 int numberOfTurnarounds = 0;
 int counter = 0;
 int counterTH = 75; //How many cycles between ultrasonic readings
+int ToTurn = 0;
+
+void SetToTurn()
+{
+  ToTurn = 1;
+}
 
 String direction = "left";
 void changeDirection(int d)
@@ -72,6 +78,12 @@ void WhenLineFollowing() {
     {
       newMotorSpeeds = SPIN_TURNAROUND;
     }
+  }
+
+  if (ToTurn == 1)
+  {
+    ToTurn = 0;
+    PickWhichTurnAround(newMotorSpeeds);
   }
 
   if (newMotorSpeeds.right == turnAroundErrorCode)

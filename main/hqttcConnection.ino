@@ -113,6 +113,10 @@ void onMqttMessage(int messageSize)
       changeDirection(0);
     if (inString == 'R')
       changeDirection(1);
+    if (_TurnOnRecive)
+    {
+      SetToTurn();
+    }
 
   }
 
