@@ -63,6 +63,8 @@ struct wheelSpeeds executeLineFollowing()
     newMotorSpeeds = RevUp(); 
   else if (_CurrentLineFollowingLogic == CARNAVAL)
     newMotorSpeeds = Carnaval();
+  else if (_CurrentLineFollowingLogic == DRIVE)
+    newMotorSpeeds = Drive();
 
   return newMotorSpeeds;
 }

@@ -1,7 +1,20 @@
-#include <WiFiClientSecure.h>
+//#include <Arduino_ESP32_OTA.h>
+
+//#include <WiFi.h>
 #include <ArduinoMqttClient.h>
+#include <WiFiClientSecure.h>
 
 #include "secrets.h"
+/*
+#include <Arduino_ESP32_OTA.h>
+
+#include <WiFi.h>
+#include <ArduinoMqttClient.h>
+//#include <AdafruitIO_ESP8266.h>
+//#include <Arduino_ESP32_OTA.h>
+
+#include "secrets.h"
+*/
 
 //Grabs data from secrets.h
 char ssid[] = _SSID;
@@ -71,6 +84,7 @@ void InitalizeHQTTCConnection() {
   mqttClient.subscribe(_Start);
   mqttClient.subscribe(_Commands);
   mqttClient.subscribe(_TurnDirection);
+  mqttClient.subscribe(_Instructions);
 
   delay(250);
 
@@ -106,6 +120,17 @@ void waitForOnFromServer() {
 //Called when a message is sent by the broker
 void onMqttMessage(int messageSize)
 {
+  if (mqttClient.messageTopic() == "ChessPlayer/feeds/cetaiotrobot31415.instructions")
+  {
+    String inString = "";
+    while (mqttClient.available()) {
+      inString += ((char)mqttClient.read());
+    }
+    Serial.println(inString);
+    SetMovement(inString);
+  }
+
+
   if (mqttClient.messageTopic() == "ChessPlayer/feeds/cetaiotrobot31415.direction")
   {
     char inString = (char)mqttClient.read();
