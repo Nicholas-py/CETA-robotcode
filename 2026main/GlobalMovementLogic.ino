@@ -50,16 +50,7 @@ struct wheelSpeeds executeLineFollowing()
   struct wheelSpeeds newMotorSpeeds;
 
   //selects which line following code to work
-  if (_CurrentLineFollowingLogic == NICHOLAS)
-    newMotorSpeeds = NicholasLineFollowing(lightSensorInputs);
-
-  else if (_CurrentLineFollowingLogic == ADRIAN)
-    newMotorSpeeds = AdrianLineFollowing(lightSensorInputs);
-
-  else if (_CurrentLineFollowingLogic == MUNJAL)
-    newMotorSpeeds = MunjalLineFollowing(lightSensorInputs);
-
-  else if (_CurrentLineFollowingLogic == REVUP)
+  if (_CurrentLineFollowingLogic == REVUP)
     newMotorSpeeds = RevUp(); 
   else if (_CurrentLineFollowingLogic == CARNAVAL)
     newMotorSpeeds = Carnaval();
